@@ -1,20 +1,68 @@
+<header>
+  <div class="container">
+    <div class="logo">
+      <a href="http://kspas.co.za">
+          <img src="http://kspas.co.za/wp-content/uploads/2018/06/logo-6.png" alt="KSPAS">
+      </a>
+      </div>
+      <nav>
+        <ul class="menu" *ngIf="logoutLink">
+          <li *ngIf="logoutLink">
+              <a href="javascript:void(0)" id="basic-link" (click)="navDashboard()"  routerLink="/admin">
+                <i class="glyphicon glyphicon-dashboard"></i>
+                Dashboard
+              </a>
+          </li>
+          <li *ngFor="let navOption of navOptions ">
+              <a href="javascript:void(0)"  id="basic-link" (click)="navLink(navOption)" routerLink="{{navOption.link}}">
+               <i class="glyphicon glyphicon-{{navOption.icon}}"></i>
+                {{navOption.label}}
+              </a>
+          </li>
+          <li *ngIf="logoutLink">
+              <a href="javascript:void(0)" id="basic-link" (click)="logout($event)">
+                <i class="glyphicon glyphicon-off"></i>
+                Logout
+              </a>
+          </li>
+        </ul>
+        <div class="menu-resp
+        onsive">
+          <i class="fa fa-bars"></i>
+        </div>
+      </nav>
+    </div>
+</header>
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div class="container">
+  <div class="btn-group btn-breadcrumb padding" *ngIf="logoutLink">
+    <a href="javascript:void(0)" class="btn btn-primary"><i class="glyphicon glyphicon-{{pageIcon}}"></i></a>
+    <a href="javascript:void(0)" class="btn btn-primary">{{pageTitle}}</a>
+  </div>
+  <div class="btn-group mgl" dropdown *ngIf="actions.length !== 0">
+  <button id="button-basic" dropdownToggle type="button" class="btn btn-danger dropdown-toggle"
+      aria-controls="dropdown-basic">
+      <i class="glyphicon glyphicon-cog"></i>
+      Actions <span class="caret"></span>
+  </button>
+  <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+      role="menu" aria-labelledby="button-basic">
+    <li role="menuitem" *ngFor="let action of actions ">
+      <a class="dropdown-item" href="javascript:void(0)"  routerLink="{{action.link}}" >
+        <i class="glyphicon glyphicon-{{action.icon}}"></i>
+        {{action.label}}
+      </a>
+    </li>
+  </ul>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+  <h4 *ngIf="logoutLink">{{pageTitle}}</h4>
+  <router-outlet></router-outlet>
+</div>
 
+<!--<footer>
+  <div class="green-line">
+    <ul class="right">
+        <li>Copyright © 2018 <span class="divider">·</span> <a href="http://kspas.co.za">KSPAS</a></li>
+    </ul>
+  </div>
+</footer>-->

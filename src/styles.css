@@ -1,1 +1,173 @@
 /* You can add global styles to this file, and also import other style files */
+header {
+    height: 75px;
+    width: 100%;
+    box-shadow: 0 0 5px rgba( 0, 0, 0, 0.5 );
+    z-index: 30000;
+    background: #2C3459;
+    display: block
+}
+header .logo {
+    float: left;
+    padding-top: 26px;
+    width: 300px;
+}
+header .menu {
+    float: right;
+    margin-top: 8px;
+}
+header .menu li {
+    display: inline-block;
+    list-style: none;
+    position: relative;
+}
+header .menu li .caret {
+  margin-left: 15px;
+  color: #fff;
+}
+header .menu li a, header .menu li button.menu-element {
+    color: #feffff;
+    text-decoration: none;
+    font-weight: 300;
+    font-size: 14px;
+    padding: 20px;
+    -webkit-transition: all 0.15s linear;
+    -moz-transition: all 0.15s linear;
+    transition: all 0.15s linear;
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    display: inline-block;
+}
+header .menu-responsive {
+    color: #fff;
+    text-align: right;
+    font-size: 18px;
+    padding-top: 28px;
+    float: right;
+    cursor: pointer;
+}
+/*Dropdown*/
+.dropdown-menu a.dropdown-item {
+    padding: 2px 10px;
+    color: #2c3459;
+}
+/*Footer*/
+footer .center {
+  padding: 75px 0 65px 0;
+  position: relative;
+  width: 1100px;
+  margin: 0 auto;
+}
+footer .green-line {
+    width: 150px;
+    height: 5px;
+    left: 0;
+    opacity: 0.75;
+    position: absolute;
+    top: 0;
+}
+/* Side Nav*/
+.btn-group.btn-breadcrumb.controls a {
+  margin-right: 20px;
+}
+.btn-group.btn-breadcrumb a i {
+  margin-right: 10px;
+}
+.btn-group.btn-breadcrumb.padding {
+  margin: 20px 0px;
+}
+.btn-group.mgl {
+  margin-left: 20px;
+}
+/* Table */
+.panel-table .panel-body{
+  padding:0;
+}
+
+.panel-table .panel-body .table-bordered{
+  border-style: none;
+  margin:0;
+}
+
+.panel-table .panel-body .table-bordered > thead > tr > th:first-of-type {
+    text-align:center;
+    width: 100px;
+}
+
+.panel-table .panel-body .table-bordered > thead > tr > th:last-of-type,
+.panel-table .panel-body .table-bordered > tbody > tr > td:last-of-type {
+  border-right: 0px;
+}
+
+.panel-table .panel-body .table-bordered > thead > tr > th:first-of-type,
+.panel-table .panel-body .table-bordered > tbody > tr > td:first-of-type {
+  border-left: 0px;
+}
+
+.panel-table .panel-body .table-bordered > tbody > tr:first-of-type > td{
+  border-bottom: 0px;
+}
+
+.panel-table .panel-body .table-bordered > thead > tr:first-of-type > th{
+  border-top: 0px;
+}
+
+.panel-table .panel-footer .pagination{
+  margin:0;
+}
+
+/*
+used to vertically center elements, may need modification if you're not using default sizes.
+*/
+.panel-table .panel-footer .col{
+ line-height: 34px;
+ height: 34px;
+}
+
+.panel-table .panel-heading .col h3{
+ line-height: 30px;
+ height: 30px;
+}
+
+.panel-table .panel-body .table-bordered > tbody > tr > td{
+  line-height: 34px;
+}
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+.form-area
+{
+	padding: 10px 40px 60px;
+	margin: 10px 0px 60px;
+	color: #333;
+  background-color: #f5f5f5;
+  border-color: #ddd;
+	}
+.form-area h2 {
+  color: #2c3459;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0px;
+  padding: 13px 0px;
+}
+.btn-group button {
+  margin-right: 20px;
+}
+header .menu li a i {
+  margin-right: 6px;
+}
+.col-md-6.no-padding-left {
+  padding-left: 0px;
+}
+.btn.btn-danger.actions,
+.btn.btn-default.actions {
+  margin-right: 20px;
+  font-size: 13px;
+  display: inline;
+}
+.btn-group.pull-right .btn.btn-danger {
+  margin-right: 0px;
+}

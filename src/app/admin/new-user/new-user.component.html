@@ -1,0 +1,36 @@
+
+<div class="col-md-6 no-padding-left" >
+    <div class="form-area">
+      <h2>Add new user</h2>
+      <form role="form" [formGroup] ="rForm"  (ngSubmit)="addUser(rForm.value)">
+        <div class="form-group">
+            <input type="name" class="form-control" placeholder="Username" appAutofocus formControlName="username">
+        </div>
+        <div class="form-group">
+            <input type="name" class="form-control" placeholder="First Name" appAutofocus formControlName="firstName">
+        </div>
+        <div class="form-group">
+            <input type="name" class="form-control" placeholder="Last name" appAutofocus formControlName="lastName">
+        </div>
+        <div class="form-group">
+            <input type="name" class="form-control" placeholder="Occupation" appAutofocus formControlName="occupation">
+        </div>
+        <div class="form-group">
+            <input type="name" class="form-control" placeholder="Telephone" appAutofocus formControlName="telephone">
+        </div>
+        <div class="form-group">
+            <input type="name" class="form-control" placeholder="Cellphone" appAutofocus formControlName="cellphone">
+        </div>
+        <div class="form-group">
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" appAutofocus formControlName="email">
+        </div>
+        <div class="btn-group pull-right">
+          <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+          <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Cancel</button>
+        </div>
+      </form>
+    </div>
+</div>
+<div class="col-md-6">
+  {{ formObj | json}}
+</div>

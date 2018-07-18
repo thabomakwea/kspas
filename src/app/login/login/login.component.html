@@ -1,0 +1,36 @@
+    <div class="main">
+      <h3>Please Log In, or <a href="#">Sign Up</a></h3>
+      <div class="callout warning" *ngIf="loginError"> {{ loginAlert }}</div>
+      <form role="form" [formGroup] ="rForm"  (ngSubmit)="login(rForm.value)">
+        <div class="form-group">
+          <label for="inputUsernameEmail">Username or email</label>
+          <input type="text" class="form-control" #usernameobj appAutofocus formControlName="username">
+          <div class="alert" *ngIf="!rForm.controls['username'].valid && rForm.controls['username'].touched">{{ usernameAlert }}</div>
+        </div>
+        <div class="form-group">
+          <a class="pull-right" href="#">Forgot password?</a>
+          <label for="inputPassword">Password</label>
+          <input type="password" class="form-control" formControlName="password">
+          <div class="alert"  *ngIf="!rForm.controls['password'].valid && rForm.controls['password'].touched">{{ passwordAlert }}</div>
+        </div>
+        <div class="checkbox pull-right">
+          <label>
+            <input type="checkbox">
+            Remember me </label>
+        </div>
+        <button type="submit" class="btn btn btn-primary" [disabled]="!rForm.valid">
+          Log In
+        </button>
+      </form>
+      <div class="login-or">
+        <hr class="hr-or">
+        <span class="span-or">or</span>
+      </div>
+
+      <div class="row">
+        <a href="#" class="btn btn-lg btn-danger btn-block">Sign up</a>
+      </div>
+<!--<a routerLink="/login" routerLinkActive="active">Crisis Center</a>
+<a routerLink="/admin" routerLinkActive="active">Heroes</a>
+<a routerLink="/user" routerLinkActive="active">Heroes</a>-->
+{{ formObj | json}}
