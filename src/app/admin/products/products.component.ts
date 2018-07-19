@@ -36,7 +36,7 @@ export class ProductsComponent implements OnInit {
       err => {
         console.log('Err: ', err);
       }
-      );
-    }
+    );
+  }
 
 }

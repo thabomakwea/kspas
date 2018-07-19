@@ -79,6 +79,7 @@ export class AppComponent implements OnInit {
   }
   logout (event?: any) {
     localStorage.removeItem('adminData');
+    localStorage.removeItem('userData');
     this.router.navigate([this.loginUrl]);
     this.logoutLink = false;
     console.log('Logout:::clicked');
