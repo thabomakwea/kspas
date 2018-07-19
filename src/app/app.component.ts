@@ -32,10 +32,9 @@ export class AppComponent implements OnInit {
     ],
     loggedIn: {
       user: [
-        { label: 'My Profile', link: ''},
-        { label: 'My Dependents', link: ''},
-        { label: 'My Products', link: ''},
-        { label: 'My Referals', link: ''},
+        { label: 'My Profile', link: 'user/profile', icon: 'user'},
+        { label: 'My Dependents', link: 'user/dependents', icon: 'heart'},
+        { label: 'My Products', link: 'user/products', icon: 'gift'},
       ],
       admin: [
         { label: 'Users', link: 'admin/users', icon: 'user', actions: [

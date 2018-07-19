@@ -19,10 +19,18 @@ import { ReferralsComponent } from './admin/referrals/referrals.component';
 import { NewDependentComponent } from './admin/new-dependent/new-dependent.component';
 import { ListDependentComponent } from './admin/list-dependent/list-dependent.component';
 import { ListDependentsComponent } from './admin/list-dependents/list-dependents.component';
+import { ProfileComponent } from './user/profile/profile.component';
+import { UserProductsComponent } from './user/products/products.component';
+import { UserDependentsComponent } from './user/dependents/dependents.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
+  // User
   { path: 'user', component: UserComponent },
+  { path: 'user/profile', component: ProfileComponent },
+  { path: 'user/products', component: UserProductsComponent },
+  { path: 'user/dependents', component: UserDependentsComponent },
+  // Amin
   { path: 'admin', component: AdminComponent },
   { path: 'admin/list-users', component: ListUsersComponent },
   { path: 'admin/new-user', component: NewUserComponent },
@@ -53,7 +61,10 @@ const appRoutes: Routes = [
     ReferralsComponent,
     NewDependentComponent,
     ListDependentComponent,
-    ListDependentsComponent
+    ListDependentsComponent,
+    ProfileComponent,
+    UserProductsComponent,
+    UserDependentsComponent
   ],
   imports: [
     FormsModule,
