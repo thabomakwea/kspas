@@ -19,6 +19,7 @@ const httpOptions = {
 export class DependentsService {
   private dependentsSource = new Subject<any>();
   private url = 'http://kspas.co.za/api/get_recent_posts?post_type=dependents';
+  private urlUser = 'http://kspas.co.za/api/get_recent_posts?post_type=dependents&';
   // Observable Streams
  public  dependentsStream$ = this.dependentsSource.asObservable();
   constructor(private http: HttpClient) { }
@@ -30,6 +31,26 @@ export class DependentsService {
       }, err => {
         return err;
       } );
+  }
+
+  getUsersDependents(dependentObj): Observable<any> {
+    const body = this.serializeObj(dependentObj.userId);
+    return this.http.get(this.urlUser + body, httpOptions)
+      .map( res => {
+        return res;
+      }, err => {
+        return err;
+      } );
+  }
+
+  serializeObj(obj) {
+    const result = [];
+    for (const property in obj) {
+      if (property) {
+        result.push(encodeURIComponent(property) + '=' + encodeURIComponent(obj[property]));
+      }
+    }
+    return '' + result.join('&');
   }
 
 }

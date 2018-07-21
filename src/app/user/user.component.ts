@@ -27,6 +27,6 @@ export class UserComponent implements OnInit {
       this.user = JSON.parse( localStorage.getItem('userData'));
       console.log('User Data: ', this.user);
     }
-  } 
+  }
 
 }

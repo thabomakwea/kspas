@@ -1,10 +1,19 @@
-<div class="col-md-6">
+<div class="col-md-6 no-pad-left">
   <ul class="list-group">
-    <li class="list-group-item text-muted">Profilo</li>
-    <li class="list-group-item text-right"><span class="pull-left"><strong>Nome</strong></span> Andrea</li>
-    <li class="list-group-item text-right"><span class="pull-left"><strong>Email</strong></span> andrearossi.it</li>
-    <li class="list-group-item text-right"><span class="pull-left"><strong>Telefono</strong></span> +391236669992</li>
-    <li class="list-group-item text-right"><span class="pull-left"><strong>Ultimo accesso</strong></span> 23/07/2016</li>
-    
-  </ul> 
+    <li class="list-group-item text-muted">
+      Member since {{userData.data.user_registered}}
+    </li>
+    <li class="list-group-item text-right">
+      <span class="pull-left"><strong>Username: </strong></span> {{userData.data.user_login}}
+    </li>
+    <li class="list-group-item text-right">
+      <span class="pull-left"><strong>Name: </strong></span> {{userData.data.display_name}}
+    </li>
+    <li class="list-group-item text-right">
+      <span class="pull-left"><strong>Email: </strong></span> {{userData.data.user_email}}
+    </li>
+    <li class="list-group-item text-right"  *ngFor="let data of user">
+      <span class="pull-left"><strong>{{data.LABEL}}</strong></span> {{data.VALUE}}
+    </li>
+  </ul>
 </div>

@@ -32,9 +32,9 @@ export class AppComponent implements OnInit {
     ],
     loggedIn: {
       user: [
-        { label: 'My Profile', link: 'user/profile', icon: 'user'},
-        { label: 'My Dependents', link: 'user/dependents', icon: 'heart'},
-        { label: 'My Products', link: 'user/products', icon: 'gift'},
+        { label: 'My Profile', link: 'user/profile', icon: 'user', actions: []},
+        { label: 'My Dependents', link: 'user/dependents', icon: 'heart', actions: []},
+        { label: 'My Products', link: 'user/products', icon: 'gift', actions: []},
       ],
       admin: [
         { label: 'Users', link: 'admin/users', icon: 'user', actions: [
@@ -58,6 +58,7 @@ export class AppComponent implements OnInit {
     public route: ActivatedRoute,
   ) {}
   ngOnInit() {
+    console.log('actions: ', this.actions);
     this.loginUrl = this.route.snapshot.queryParams['loginUrl'] || '/login';
     this.navOptions = {};
     this.subscription = this.loginService.loginStream$.subscribe(

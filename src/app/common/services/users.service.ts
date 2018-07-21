@@ -17,18 +17,39 @@ const httpOptions = {
 @Injectable()
 export class UsersService {
   private userSource = new Subject<any>();
-  private url = 'http://kspas.co.za/wp-json/custom-plugin/v1/get_user';
+  private urlUsers = 'http://kspas.co.za/wp-json/custom-plugin/v1/get_user';
+  private urlUser = 'http://kspas.co.za/wp-json/custom-plugin/v1/getUserMeta?';
   // Observable Streams
  public  userStream$ = this.userSource.asObservable();
   constructor(private http: HttpClient) { }
 
   getUsers(): Observable<any> {
-    return this.http.get(this.url, httpOptions)
+    return this.http.get(this.urlUsers, httpOptions)
       .map( res => {
         return res;
       }, err => {
         return err;
       } );
+  }
+
+  getUser(user_id): Observable<any> {
+    const body = this.serializeObj(user_id);
+    return this.http.post(this.urlUser + body, httpOptions)
+      .map( res => {
+        return res;
+      }, err => {
+        return err;
+      } );
+  }
+
+  serializeObj(obj) {
+    const result = [];
+    for (const property in obj) {
+      if (property) {
+        result.push(encodeURIComponent(property) + '=' + encodeURIComponent(obj[property]));
+      }
+    }
+    return '' + result.join('&');
   }
 
 }
