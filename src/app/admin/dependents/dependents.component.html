@@ -1,8 +1,22 @@
+<div class="alert alert-success" *ngIf="userUpdated">
+    <a href="#" class="pull-right">&times;</a>
+    <strong>Success:</strong> dependent updated successfully.
+</div>
+<div class="alert alert-success" *ngIf="userDeleted">
+    <a href="#" class="pull-right">&times;</a>
+    <strong>Success:</strong> dependent deleted successfully.
+</div>
+
 <div class="panel panel-default panel-table">
   <div class="panel-heading">
     <div class="row">
-      <div class="col col-xs-6">
-        <h3 class="panel-title">List all dependents</h3>
+      <div class="col col-xs-6 text-left"  id="custom-search-form" >
+        <!--<form id="custom-search-form" class="form-search form-horizontal pull-left">-->
+            <div class="input-append span12">
+                <input type="text" class="search-query mac-style" placeholder="Search" (input)="onSearchChange($event.target.value)" [(ngModel)]="queryString">
+                <button type="submit" class="btn"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        <!--</form>-->
       </div>
       <div class="col col-xs-6 text-right">
         <a routerLink="/admin/new-dependent" class="btn btn-sm btn-primary btn-create">
@@ -23,10 +37,11 @@
         </tr>
       </thead>
       <tbody>
-              <tr *ngFor="let dependent of dependents">
+              <tr *ngFor="let dependent of dependents | filterdata: queryString : 'title' ; let i = index">
                 <td align="center">
-                  <a class="btn btn-default actions"><i class="glyphicon glyphicon-pencil"></i></a>
-                  <a class="btn btn-danger actions"><i class="glyphicon glyphicon-trash"></i></a>
+                  <a class="btn btn-primary actions" (click)="openModal(template, dependent)"><i class="glyphicon glyphicon-eye-open"></i></a>
+                  <a class="btn btn-default actions" (click)="openModal(templateEdit, dependent, 'edit')"><i class="glyphicon glyphicon-pencil"></i></a>
+                  <a class="btn btn-danger actions" (click)="openModal(templateDelete, dependent, 'delete')"><i class="glyphicon glyphicon-trash"></i></a>
                 </td>
                 <td class="hidden-xs">{{dependent.custom_fields.ct_name_text_e394[0]}}</td>
                 <td>{{dependent.custom_fields.ct_Last_name_text_3960[0]}}</td>
@@ -57,4 +72,97 @@
   </div>
 </div>
 
+<!--  MODAL DIALOG -->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Users Profile</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ul class="list-group">
+      <li class="list-group-item text-right">
+        <span class="pull-left"><strong>Name: </strong></span> {{dependentData.firstName}}
+      </li>
+      <li class="list-group-item text-right">
+        <span class="pull-left"><strong>Last name: </strong></span> {{dependentData.lastName}}
+      </li>
+      <li class="list-group-item text-right">
+        <span class="pull-left"><strong>ID number: </strong></span> {{dependentData.idNumber}}
+      </li>
+      <li class="list-group-item text-right">
+        <span class="pull-left"><strong>Dependent Type : </strong></span> {{dependentData.dependentType}}
+      </li>
+      <li class="list-group-item text-right">
+        <span class="pull-left"><strong>Date of birth : </strong></span> {{dependentData.dob}}
+      </li>
+      <li class="list-group-item text-right">
+        <span class="pull-left"><strong>Main member ID : </strong></span> {{dependentData.mainMemberID}}
+      </li>
+      <li class="list-group-item text-right">
+        <span class="pull-left"><strong>Registration date : </strong></span> {{dependentData.regDate}}
+      </li>
+    </ul>
+  </div>
+</ng-template>
 
+<!--  MODAL DIALOG -->
+<ng-template #templateEdit>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Users Profile</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form role="form" [formGroup] ="rForm"  (ngSubmit)="updateDependent(rForm.value)">
+        <div class="form-group">
+            <input type="name" class="form-control" placeholder="First Name" formControlName="firstName">
+        </div>
+        <div class="form-group">
+            <input type="name" class="form-control" placeholder="Last name" formControlName="lastName">
+        </div>
+        <div class="form-group">
+            <input type="name" class="form-control" placeholder="Id number" formControlName="idNumber">
+        </div>
+        <div class="form-group">
+            <!--<input type="name" class="form-control" placeholder="Date of birth" formControlName="dateOfBirth">-->
+            <input type="date" class="form-control" placeholder="Date of birth" formControlName="dob" />
+        </div>
+        <div class="form-group">
+            <input list="dependentType" type="name" class="form-control" placeholder="Select Dependented Type" formControlName="dependentType">
+            <datalist id="dependentType">
+              <option value="1">Spouse</option>
+              <option value="2">Child</option>
+            </datalist>
+        </div>
+        <div class="form-group">
+            <input  placeholder="Main member" class="form-control" formControlName="mainMemberID">
+        </div>
+        <div class="form-group clearfix">
+        <div class="btn-group pull-right">
+          <button [disabled]="!isValidForm()" type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+          <button type="button" class="btn btn-danger" (click)="modalRef.hide()"><i class="glyphicon glyphicon-remove"></i> Cancel</button>
+        </div>
+        </div>
+      </form>
+  </div>
+</ng-template>
+<!--  MODAL DIALOG -->
+<ng-template #templateDelete>
+  <div class="modal-header">
+    <h4 class="modal-title">Are you sure?</h4>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to delete this dependent?</p>
+    <div class="row">
+        <div class="form-group clearfix">
+          <div class="btn-group pull-right">
+              <button class="btn btn-primary" (click)="deleteDependent()">Yes</button>
+              <button class="btn btn-danger" (click)="modalRef.hide()">No</button>
+          </div>
+        </div>
+    </div>
+  </div>
+</ng-template>

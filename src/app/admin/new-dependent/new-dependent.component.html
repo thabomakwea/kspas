@@ -1,4 +1,7 @@
-
+<div class="alert alert-success" *ngIf="dependentAdded">
+  <a href="#" class="pull-right">&times;</a>
+  <strong>Success:</strong> dependent was added successfully.
+</div>
 <div class="col-md-6 no-padding-left" >
     <div class="form-area">
       <h2>Add new dependent</h2>
@@ -17,21 +20,19 @@
             <input type="date" class="form-control" placeholder="Date of birth" formControlName="dateOfBirth" />
         </div>
         <div class="form-group">
-            <!--<input type="name" class="form-control" placeholder="Dependented Type" formControlName="dependentType">-->
-            <select class="form-control" formControlName="dependentType">
-              <option value="" disabled selected>Select your option</option>
+            <input list="dependentType" type="name" class="form-control" placeholder="Select Dependented Type" formControlName="dependentType">
+            <datalist id="dependentType">
               <option value="1">Spouse</option>
-            </select>
+              <option value="2">Child</option>
+            </datalist>
         </div>
         <div class="form-group">
             <!--<input type="name" class="form-control" placeholder="Main member Id" formControlName="mainMemberID">-->
-            <input list="dependents" name="browser" class="form-control" formControlName="mainMemberID">
+            <input list="dependents" placeholder="Search for users" class="form-control" formControlName="mainMemberID" (input)="onSearchChange($event.target.value)">
             <datalist id="dependents">
-              <option value="Thabo Makwea">
-              <option value="Mpho Maleka">
-              <option value="Tumelo Mahlagani">
-              <option value="Seipei Mathole">
-              <option value="Ayanda Brits">
+              <option  *ngFor="let dependent of dependents" value="{{dependent.data.ID}}">
+                {{dependent.data.display_name}}
+              </option>
             </datalist>
             <!--<select class="form-control" formControlName="mainMemberID">
               <option value="" disabled selected>Select your option</option>
@@ -39,8 +40,8 @@
             </select>-->
         </div>
         <div class="btn-group">
-          <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
-          <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Cancel</button>
+          <button [disabled]="!isValidForm()" type="submit" class="btn btn-primary" (click)="saveDependent()" ><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+          <a href="javascript:void(0)" routerLink="/admin/dependents" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Cancel</a>
         </div>
       </form>
     </div>

@@ -1,3 +1,4 @@
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 /* You can add global styles to this file, and also import other style files */
 header {
     height: 75px;
@@ -163,11 +164,65 @@ header .menu li a i {
   padding-left: 0px;
 }
 .btn.btn-danger.actions,
-.btn.btn-default.actions {
-  margin-right: 20px;
+.btn.btn-default.actions,
+.btn.btn-primary.actions {
+  margin-right: 7px;
   font-size: 13px;
   display: inline;
 }
 .btn-group.pull-right .btn.btn-danger {
   margin-right: 0px;
 }
+.modal-header {
+    min-height: 50px !important;
+}
+#custom-search-form {
+    margin:0;
+    margin-top: 5px;
+    padding: 0;
+}
+
+#custom-search-form .search-query {
+    margin-left: 15px;
+    padding-right: 3px;
+    padding-right: 4px \9;
+    padding-left: 3px;
+    padding-left: 4px \9;
+    /* IE7-8 doesn't have border-radius, so don't indent the padding */
+
+    margin-bottom: 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-transition: width  0.2s ease-in-out;
+    -moz-transition:width  0.2s ease-in-out;
+    -o-transition: width  0.2s ease-in-out;
+    transition: width  0.2s ease-in-out;
+
+    border: 1px solid #ddd;
+    padding: 4px 10px;
+    font-size: 13px;
+}
+
+#custom-search-form button {
+    border: 0;
+    background: none;
+    /** belows styles are working good */
+    padding: 2px 5px;
+    margin-top: 2px;
+    position: relative;
+    left: -28px;
+    /* IE7-8 doesn't have border-radius, so don't indent the padding */
+    margin-bottom: 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.search-query:focus + button {
+    z-index: 3;
+}
+.search-query:focus{
+    width: 260px;
+}
+

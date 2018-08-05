@@ -10,6 +10,7 @@ import { Router,  NavigationExtras, ActivatedRoute } from '@angular/router';
   providers: [LoginService]
 })
 export class AppComponent implements OnInit {
+  spinner =  false;
   loginUrl: any;
   pageTitle = 'Dashboard';
   pageIcon = 'dashboard';
@@ -46,12 +47,12 @@ export class AppComponent implements OnInit {
           {label: 'List all dependents', link: 'admin/list-dependents', icon: 'list'}
         ]},
         { label: 'Products', link: 'admin/products', icon: 'gift', actions: []},
-        { label: 'Referrals', link: 'admin/referrals', icon: 'link', actions: []},
       ]
     },
   };
   public logoutLink = false;
   public actions = [];
+  public dashboardUrl;
   constructor(
     public loginService: LoginService,
     public router: Router,
@@ -66,9 +67,11 @@ export class AppComponent implements OnInit {
         if (res.roles[0] === 'administrator') {
           this.navOptions = this.menu.loggedIn.admin;
           this.logoutLink = true;
+          this.dashboardUrl = '/admin';
         } else if (res.roles[0] === 'subscriber') {
           this.navOptions = this.menu.loggedIn.user;
           this.logoutLink = true;
+          this.dashboardUrl = '/user';
         } else {
           this.navOptions = {};
         }

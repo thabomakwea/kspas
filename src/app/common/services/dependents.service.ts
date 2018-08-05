@@ -20,6 +20,10 @@ export class DependentsService {
   private dependentsSource = new Subject<any>();
   private url = 'http://kspas.co.za/api/get_recent_posts?post_type=dependents';
   private urlUser = 'http://kspas.co.za/api/get_recent_posts?post_type=dependents&';
+  private urlNewDependent = 'http://kspas.co.za/wp-json/custom-plugin/v1/newDependent?';
+  private urlUpdateDependent = 'http://kspas.co.za/wp-json/custom-plugin/v1/updateDependent?';
+  private urlDeleteDependent = 'http://kspas.co.za/wp-json/custom-plugin/v1/deleteDependent?';
+  private urlSearch = 'http://kspas.co.za/wp-json/custom-plugin/v1/getSearchResults?';
   // Observable Streams
  public  dependentsStream$ = this.dependentsSource.asObservable();
   constructor(private http: HttpClient) { }
@@ -32,7 +36,33 @@ export class DependentsService {
         return err;
       } );
   }
-
+  addDependent(dependentObj) {
+    const body = this.serializeObj(dependentObj);
+    return this.http.post(this.urlNewDependent + body, httpOptions)
+      .map( res => {
+        return res;
+      }, err => {
+        return err;
+      } );
+  }
+  updateDependent(dependentObj) {
+    const body = this.serializeObj(dependentObj);
+    return this.http.post(this.urlUpdateDependent + body, httpOptions)
+      .map( res => {
+        return res;
+      }, err => {
+        return err;
+      } );
+  }
+  deleteDependent(dependentObj) {
+    const body = this.serializeObj(dependentObj);
+    return this.http.post(this.urlDeleteDependent + body, httpOptions)
+      .map( res => {
+        return res;
+      }, err => {
+        return err;
+      } );
+  }
   getUsersDependents(dependentObj): Observable<any> {
     const body = this.serializeObj(dependentObj.userId);
     return this.http.get(this.urlUser + body, httpOptions)
@@ -43,6 +73,15 @@ export class DependentsService {
       } );
   }
 
+  searchDependents(searchObj) {
+    const body = this.serializeObj(searchObj);
+    return this.http.post(this.urlSearch + body, httpOptions)
+      .map( res => {
+        return res;
+      }, err => {
+        return err;
+      } );
+  }
   serializeObj(obj) {
     const result = [];
     for (const property in obj) {

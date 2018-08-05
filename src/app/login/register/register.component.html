@@ -1,0 +1,28 @@
+    <div class="main">
+      <h3>Create a free KSPAS account</h3>
+      <form role="form" [formGroup] ="rForm"  (ngSubmit)="register(rForm.value)">
+        <div class="form-group">
+          <label for="inputUsernameEmail">Username</label>
+          <input type="text" class="form-control" appAutofocus formControlName="username" placeholder="Enter username">
+        </div>
+        <div class="form-group">
+          <label for="inputPassword">E-mail</label>
+          <input type="email" class="form-control" formControlName="email" placeholder="Enter email address">
+        </div>
+        <button type="submit" class="btn btn-lg btn-danger btn-block" [disabled]="!rForm.valid">
+          Sign up
+        </button>
+      </form>
+
+      <div class="row">
+        <p class="text-center">
+            By clicking the 'Sign Up' button, you confirm that you accept our
+            Terms of use and Privacy Policy.
+        </p>
+        <p class="text-center">
+            Have an account? <a href="javascript:void(0)" routerLink="/login" >Log In herenpm </a>
+        </p>
+
+      </div>
+
+{{ formObj | json}}

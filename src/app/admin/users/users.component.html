@@ -1,9 +1,18 @@
+<div class="alert alert-success" *ngIf="userUpdated">
+    <a href="#" class="pull-right">&times;</a>
+    <strong>Success:</strong> User was added successfully.
+  </div>
 <div class="panel panel-default panel-table">
 <div class="panel-heading">
   <div class="row">
-    <div class="col col-xs-6">
-      <h3 class="panel-title">List all users</h3>
-    </div>
+    <div class="col col-xs-6 text-left"  id="custom-search-form" >
+        <!--<form id="custom-search-form" class="form-search form-horizontal pull-left">-->
+            <div class="input-append span12">
+                <input type="text" class="search-query mac-style" placeholder="Search"  [(ngModel)]="queryString">
+                <button type="submit" class="btn"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        <!--</form>-->
+      </div>
     <div class="col col-xs-6 text-right">
       <a routerLink="/admin/new-user" class="btn btn-sm btn-primary btn-create">
         <i class="glyphicon glyphicon-plus"></i>
@@ -23,16 +32,17 @@
       </tr>
     </thead>
     <tbody>
-            <tr *ngFor="let user of users">
-              <td align="center">
-                <a class="btn btn-default actions"><i class="glyphicon glyphicon-pencil"></i></a>
-                <a class="btn btn-danger actions"><i class="glyphicon glyphicon-trash"></i></a>
-              </td>
-              <td class="hidden-xs">{{user.data.ID}}</td>
-              <td>{{user.data.display_name}}</td>
-              <td>{{user.data.user_email}}</td>
-            </tr>
-          </tbody>
+        <tr *ngFor="let user of users | filterdata: queryString : 'display_name' ; let i = index">
+          <td align="center">
+            <a class="btn btn-primary actions" (click)="openModal(template, user)"><i class="glyphicon glyphicon-eye-open"></i></a>
+            <a class="btn btn-default actions" (click)="openModal(templateEdit, user, 'edit')"><i class="glyphicon glyphicon-pencil"></i></a>
+            <!-- <a class="btn btn-danger actions"><i class="glyphicon glyphicon-trash"></i></a> -->
+          </td>
+          <td class="hidden-xs">{{user.ID}}</td>
+          <td>{{user.display_name}}</td>
+          <td>{{user.user_email}}</td>
+        </tr>
+    </tbody>
   </table>
 
 </div>
@@ -57,4 +67,100 @@
 </div>
 </div>
 
+<!--  MODAL DIALOG -->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Users Profile</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ul class="list-group">
+      <li class="list-group-item text-right">
+        <span class="pull-left"><strong>Username: </strong></span> {{userData.username}}
+      </li>
+      <li class="list-group-item text-right">
+        <span class="pull-left"><strong>Name: </strong></span> {{userData.fullName}}
+      </li>
+      <li class="list-group-item text-right">
+        <span class="pull-left"><strong>E-mail: </strong></span> {{userData.email}}
+      </li>
+      <li class="list-group-item text-right">
+        <span class="pull-left"><strong>User ID : </strong></span> {{userData.userID}}
+      </li>
+
+      <li class="list-group-item text-right" *ngFor="let userMeta of user; let i = index">
+        <span class="pull-left"><strong>{{userMeta.LABEL}}: </strong></span> {{userMeta.VALUE}}
+      </li>
+      <li class="list-group-item text-right">
+        <span class="pull-left"><strong>Date registered: </strong></span> {{userData.regDate}}
+      </li>
+    </ul>
+  </div>
+</ng-template>
+
+
+<!--  MODAL DIALOG -->
+<ng-template #templateEdit>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Users Profile</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form role="form" [formGroup] ="rForm"  (ngSubmit)="updateUser(rForm.value)">
+        <div class="form-group">
+            <input disabled="disabled" type="name" class="form-control" value="user" placeholder="Username" appAutofocus formControlName="username">
+        </div>
+        <div class="form-group">
+            <input type="name" class="form-control" placeholder="First Name" appAutofocus formControlName="first_name">
+        </div>
+        <div class="form-group">
+            <input type="name" class="form-control" placeholder="Last name" appAutofocus formControlName="last_name">
+        </div>
+        <div class="form-group">
+            <input type="name" class="form-control" placeholder="Occupation" appAutofocus formControlName="occupation">
+        </div>
+        <div class="form-group">
+            <input type="name" class="form-control" placeholder="Telephone" appAutofocus formControlName="telephone">
+        </div>
+        <div class="form-group">
+            <input type="name" class="form-control" placeholder="Cellphone" appAutofocus formControlName="cellphone">
+        </div>
+        <div class="form-group">
+            <input type="name" class="form-control" placeholder="Address" appAutofocus formControlName="address">
+        </div>
+        <div class="form-group">
+            <input type="name" class="form-control" placeholder="ID Number" appAutofocus formControlName="id_number">
+        </div>
+        <div class="form-group">
+            <input type="email" class="form-control"  placeholder="Enter email" appAutofocus formControlName="email">
+        </div>
+        <legend>Benefits</legend>
+        <div class="form-group clearfix">
+          <span class="pull-left">Society benefit</span>
+          <label class="switch pull-left">
+            <input type="checkbox" [checked]="rForm.controls['society_benefit'].value" formControlName="society_benefit">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="form-group clearfix">
+          <span class="pull-left">Grocery benefit</span>
+          <label class="switch pull-left">
+            <input type="checkbox" [checked]="rForm.controls['grocery_benefit'].value" formControlName="grocery_benefit">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="form-group clearfix">
+          <div class="btn-group pull-right">
+            <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+            <a href="javascript:void(0)" class="btn btn-danger" (click)="modalRef.hide()"><i class="glyphicon glyphicon-remove"></i> Cancel</a>
+          </div>
+        </div>
+        {{ formObj | json}}
+      </form>
+  </div>
+</ng-template>
 

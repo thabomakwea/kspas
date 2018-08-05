@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, timer } from 'rxjs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpHeaders, HttpClient, HttpParams} from '@angular/common/http';
@@ -19,6 +20,9 @@ const httpOptions = {
 export class NewUserComponent implements OnInit {
   rForm: FormGroup;
   formObj: any;
+  userAdded: boolean;
+  public disableSubmitBtn = true;
+
   constructor(private fb: FormBuilder, private newUserService: NewUserService) {
      this.rForm = fb.group({
       'firstName' : [null, Validators.required],
@@ -46,6 +50,13 @@ export class NewUserComponent implements OnInit {
     this.newUserService.newUser(this.formObj).subscribe(
       res => {
         console.log('res', res);
+        this.rForm.enable();
+        this.rForm.reset();
+        this.disableSubmitBtn = false;
+        this.userAdded = true;
+        timer(3000).subscribe(() => {
+          this.userAdded = false;
+        });
       },
       err => {
         console.log('res', err);

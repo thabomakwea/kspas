@@ -17,26 +17,34 @@ const httpOptions = {
 @Injectable()
 export class LoginService {
   private loginSource = new Subject<any>();
-  private nonce = 'http://kspas.co.za/api/get_nonce/?controller=auth&method=generate_auth_cookie';
   private url = 'http://kspas.co.za/wp-json/custom-plugin/v1/login?';
+  private urlRegister = 'http://kspas.co.za/wp-json/custom-plugin/v1/registerUser?';
+  private urlForgotPass = 'http://kspas.co.za/wp-json/custom-plugin/v1/lostPassword?';
 
   // Observable Streams
  public  loginStream$ = this.loginSource.asObservable();
   constructor(private http: HttpClient) { }
-
-  getNonce(): Observable<any> {
-   return this.http.get(this.nonce, httpOptions).map(
-     res => {
-       return res;
-     },
-     error => {
-       return error;
-     }
-   );
-  }
   login(loginObj): Observable<any> {
     const body = this.serializeObj(loginObj.login);
     return this.http.post(this.url + body, httpOptions)
+      .map( res => {
+        return res;
+      }, err => {
+        return err;
+      } );
+  }
+  registerUser(registerObj): Observable<any> {
+    const body = this.serializeObj(registerObj);
+    return this.http.post(this.urlRegister + body, httpOptions)
+      .map( res => {
+        return res;
+      }, err => {
+        return err;
+      } );
+  }
+  forgotPassword(forgotPassObj): Observable<any> {
+    const body = this.serializeObj(forgotPassObj);
+    return this.http.post(this.urlForgotPass + body, httpOptions)
       .map( res => {
         return res;
       }, err => {

@@ -6,6 +6,7 @@ import { Subject } from 'rxjs/Subject';
 import { catchError } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import { UserLogginData } from '../interfaces/user.interface';
 import { Nonce } from '../../common/interfaces/nonce.interface';
 
 const httpOptions = {
@@ -16,20 +17,23 @@ const httpOptions = {
 
 @Injectable()
 export class UsersService {
-  private userSource = new Subject<any>();
+  private listUsersSource = new Subject<any>();
   private urlUsers = 'http://kspas.co.za/wp-json/custom-plugin/v1/get_user';
   private urlUser = 'http://kspas.co.za/wp-json/custom-plugin/v1/getUserMeta?';
+  private urlUpdateUser = 'http://kspas.co.za/wp-json/custom-plugin/v1/updateUser?';
   // Observable Streams
- public  userStream$ = this.userSource.asObservable();
+ public  listUsersStream$ = this.listUsersSource.asObservable();
   constructor(private http: HttpClient) { }
 
-  getUsers(): Observable<any> {
-    return this.http.get(this.urlUsers, httpOptions)
-      .map( res => {
-        return res;
+  public getUsers() {
+    this.http.get<UserLogginData>(this.urlUsers, httpOptions)
+      .subscribe( res => {
+       // return res;
+        this.listUsersSource.next(res);
       }, err => {
-        return err;
-      } );
+        // return err;
+        this.listUsersSource.next(err);
+    } );
   }
 
   getUser(user_id): Observable<any> {
@@ -41,7 +45,15 @@ export class UsersService {
         return err;
       } );
   }
-
+  updateUser(userObj): Observable<any> {
+    const body = this.serializeObj(userObj);
+    return this.http.post(this.urlUpdateUser + body, httpOptions)
+      .map( res => {
+        return res;
+      }, err => {
+        return err;
+      } );
+  }
   serializeObj(obj) {
     const result = [];
     for (const property in obj) {

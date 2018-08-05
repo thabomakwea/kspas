@@ -1,4 +1,7 @@
-
+<div class="alert alert-success" *ngIf="userAdded">
+  <a href="#" class="pull-right">&times;</a>
+  <strong>Success:</strong> dependent was added successfully.
+</div>
 <div class="col-md-6 no-padding-left" >
     <div class="form-area">
       <h2>Add new user</h2>
@@ -26,7 +29,7 @@
         </div>
         <div class="btn-group pull-right">
           <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
-          <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Cancel</button>
+          <a href="javascript:void(0)" class="btn btn-danger" routerLink="/admin/users"><i class="glyphicon glyphicon-remove"></i> Cancel</a>
         </div>
       </form>
     </div>

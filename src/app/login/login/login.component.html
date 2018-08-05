@@ -1,5 +1,5 @@
     <div class="main">
-      <h3>Please Log In, or <a href="#">Sign Up</a></h3>
+      <h3>Please Log In, or <a href="javascript:void(0)" routerLink="/register"> Sign Up</a></h3>
       <div class="callout warning" *ngIf="loginError"> {{ loginAlert }}</div>
       <form role="form" [formGroup] ="rForm"  (ngSubmit)="login(rForm.value)">
         <div class="form-group">
@@ -8,7 +8,7 @@
           <div class="alert" *ngIf="!rForm.controls['username'].valid && rForm.controls['username'].touched">{{ usernameAlert }}</div>
         </div>
         <div class="form-group">
-          <a class="pull-right" href="#">Forgot password?</a>
+          <a class="pull-right" href="javascript:void(0)" routerLink="/forgot">Forgot password?</a>
           <label for="inputPassword">Password</label>
           <input type="password" class="form-control" formControlName="password">
           <div class="alert"  *ngIf="!rForm.controls['password'].valid && rForm.controls['password'].touched">{{ passwordAlert }}</div>
@@ -28,8 +28,9 @@
       </div>
 
       <div class="row">
-        <a href="#" class="btn btn-lg btn-danger btn-block">Sign up</a>
+        <a href="javascript:void(0)" routerLink="/register" class="btn btn-lg btn-danger btn-block">Sign up</a>
       </div>
+      <div class="loading">Loading&#8230;</div>
 <!--<a routerLink="/login" routerLinkActive="active">Crisis Center</a>
 <a routerLink="/admin" routerLinkActive="active">Heroes</a>
 <a routerLink="/user" routerLinkActive="active">Heroes</a>-->

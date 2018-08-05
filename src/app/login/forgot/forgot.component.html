@@ -1,0 +1,22 @@
+<div class="main">
+  <h3>Forgot your password?</h3>
+  <form role="form" [formGroup] ="rForm"  (ngSubmit)="forgot(rForm.value)">
+    <div class="form-group">
+      <label>Username or password</label>
+      <input type="text" class="form-control" appAutofocus formControlName="userLogin" placeholder="Enter username or email">
+    </div>
+    <button type="submit" class="btn btn-lg btn-danger btn-block" [disabled]="!rForm.valid">
+      Forgot password
+    </button>
+  </form>
+
+  <div class="row">
+    <p class="text-center">
+        After clicking the 'forget password' button, you'll receive an email from KSPAS to change your password.
+    </p>
+    <p class="text-center">
+      <a href="javascript:void(0)" routerLink="/login" >Back to login page </a>
+  </p>
+  </div>
+
+{{ formObj | json}}

@@ -12,6 +12,8 @@ import { UsersService } from '../../common/services/users.service';
 export class UserProductsComponent implements OnInit {
   public userData;
   public user;
+  public societyBenefit;
+  public groceryBenefit;
 
   constructor(private usersService: UsersService) { }
 
@@ -29,7 +31,11 @@ export class UserProductsComponent implements OnInit {
     this.usersService.getUser(userObj).subscribe(
       res => {
         this.user = res;
+        this.societyBenefit =  this.user.filter( data => data.NAME === 'SOCIETY-BENEFIT')[0].VALUE;
+        this.groceryBenefit = this.user.filter( data => data.NAME === 'GROCERY-BENEFIT')[0].VALUE;
         console.log('Res: ', res);
+        console.log('this.societyBenefit: ', this.societyBenefit);
+        console.log('this.groceryBenefit: ', this.groceryBenefit);
       },
       err => {
         console.log('Err: ', err);

@@ -19,9 +19,11 @@
         </tr>
       </thead>
       <tbody>
-              <tr *ngFor="let dependent of dependents">
+              <tr *ngFor="let dependent of dependents; let i = index">
                 <td align="center">
-                  ...
+                  <button type="button" class="btn btn-primary" (click)="openModal(template, dependent)">
+                    <i class="glyphicon glyphicon-eye-open"></i>
+                  </button>
                 </td>
                 <td class="hidden-xs">
                   {{dependent.custom_fields.ct_name_text_e394[0]}}
@@ -39,4 +41,29 @@
   </div>
 </div>
 
+<!--  MODAL DIALOG -->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ul class="list-group">
+      <li class="list-group-item text-right">
+        <span class="pull-left"><strong>First name: </strong></span> {{dependent.firstName}}
+      </li>
+      <li class="list-group-item text-right">
+        <span class="pull-left"><strong>Last name: </strong></span> {{dependent.lastName}}
+      </li>
+      <li class="list-group-item text-right">
+        <span class="pull-left"><strong>Id number: </strong></span> {{dependent.idNumber}}
+      </li>
+      <li class="list-group-item text-right">
+        <span class="pull-left"><strong>Date of birth: </strong></span> {{dependent.dob}}
+      </li>
+    </ul>
+  </div>
+</ng-template>
 

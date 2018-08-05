@@ -18,7 +18,7 @@ const httpOptions = {
 @Injectable()
 export class NewUserService {
   private newUserSource = new Subject<any>();
-  private url = 'http://kspas.co.za/wp-json/custom-plugin/v1/add_user?';
+  private url = 'http://kspas.co.za/wp-json/custom-plugin/v1/addNewUser?';
   // Observable Streams
  public  newUserStream$ = this.newUserSource.asObservable();
   constructor(private http: HttpClient) { }
