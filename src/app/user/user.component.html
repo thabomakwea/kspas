@@ -1,3 +1,32 @@
-<p>
-  user works!
-</p>
+  <div class="row">
+      <div class="alert alert-warning" *ngIf="pendingUser">
+          <a href="#" class="pull-right">&times;</a>
+          <strong>Action required:</strong> Please download and submit the application form to activate your account.
+        </div>
+  </div>
+
+  <div class="col-md-3 col-md-offset-2">
+      <div class="card">
+        <div class="header">
+          <i class="glyphicon glyphicon-heart"></i>
+        </div>
+        <div class="footer">
+          <strong>0</strong> Dependents
+        </div>
+      </div>
+      <a href="javascript:void(0)" routerLink="/user/dependents" class="btn btn-primary btn-block">Viea all dependents</a>
+  </div>
+  <div class="col-md-3">
+      <div class="card">
+        <div class="header">
+          <i class="glyphicon glyphicon-gift"></i>
+        </div>
+        <div class="footer">
+          <strong>0</strong> Products
+        </div>
+      </div>
+      <a href="javascript:void(0)" routerLink="/user/products" class="btn btn-primary btn-block">Viea all products</a>
+  </div>
+
+
+

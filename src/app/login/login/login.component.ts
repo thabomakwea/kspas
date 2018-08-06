@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Observable, timer } from 'rxjs';
 import { Router,  NavigationExtras, ActivatedRoute } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -29,7 +30,7 @@ export class LoginComponent implements OnInit {
   userUrl: string;
   loginUrl: string;
   formObj: any;
-
+  userLoading = false;
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -60,7 +61,8 @@ export class LoginComponent implements OnInit {
     const loginObj: LoginObj = {
       login: this.formObj
     };
-
+   this.userLoading = true;
+   this.rForm.disable();
      this.authenticationservice.login(loginObj).subscribe(
         res => {
           console.log('resLogin: ' , res);
@@ -72,8 +74,19 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('userData', JSON.stringify(res));
             this.router.navigate([this.userUrl]);
           }
+          //
+          this.rForm.enable();
+          this.rForm.reset();
+          timer(3000).subscribe(() => {
+            this.userLoading = false;
+          });
         },
          err => {
+          this.rForm.enable();
+          this.rForm.reset();
+          timer(3000).subscribe(() => {
+            this.userLoading = false;
+          });
           this.loginError = true;
           this.loginAlert = 'Error: Please try again later';
           return err;

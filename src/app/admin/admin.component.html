@@ -1,7 +1,37 @@
-<div>
-  <div></div>
-  <div></div>
-  <div></div>
-  <div></div>
+
+<div class="col-md-3 col-md-offset-1">
+  <div class="card">
+    <div class="header">
+      <i class="glyphicon glyphicon-user"></i>
+    </div>
+    <div class="footer">
+      <strong>{{countDashboard.users.total_users}}</strong> Users
+    </div>
+  </div>
+  <a href="javascript:void(0)" routerLink="/admin/users" class="btn btn-primary btn-block">Viea all users</a>
 </div>
+<div class="col-md-3">
+    <div class="card">
+      <div class="header">
+        <i class="glyphicon glyphicon-heart"></i>
+      </div>
+      <div class="footer">
+        <strong>{{countDashboard.dependents.publish}}</strong> Dependents
+      </div>
+    </div>
+    <a href="javascript:void(0)" routerLink="/admin/dependents" class="btn btn-primary btn-block">Viea all dependents</a>
+</div>
+<div class="col-md-3">
+    <div class="card">
+      <div class="header">
+        <i class="glyphicon glyphicon-gift"></i>
+      </div>
+      <div class="footer">
+        <strong>{{countDashboard.products.publish}}</strong> Products
+      </div>
+    </div>
+    <a href="javascript:void(0)" routerLink="/admin/products" class="btn btn-primary btn-block">Viea all products</a>
+</div>
+
+
 

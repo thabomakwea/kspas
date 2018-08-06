@@ -30,8 +30,8 @@
       <div class="row">
         <a href="javascript:void(0)" routerLink="/register" class="btn btn-lg btn-danger btn-block">Sign up</a>
       </div>
-      <div class="loading">Loading&#8230;</div>
+      <div class="loading" *ngIf="userLoading">Loading&#8230;</div>
 <!--<a routerLink="/login" routerLinkActive="active">Crisis Center</a>
 <a routerLink="/admin" routerLinkActive="active">Heroes</a>
 <a routerLink="/user" routerLinkActive="active">Heroes</a>-->
-{{ formObj | json}}
+<!-- {{ formObj | json}} -->

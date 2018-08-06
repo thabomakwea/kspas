@@ -11,6 +11,7 @@ export class UserComponent implements OnInit {
   public user: UserLogginData;
   public loginUrl: any;
   pageTitle = 'Dashboard';
+  pendingUser = true;
 
   constructor(
     private route: ActivatedRoute,

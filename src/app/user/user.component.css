@@ -1,0 +1,19 @@
+.card {
+  border: 1px solid #ccc;
+  text-align: center;
+}
+.card .header i {
+  font-size: 60px;
+  color: #2c3459;
+  margin: 30px;
+}
+.card .footer {
+  color: #2c3459;
+  margin-bottom: 20px;
+}
+.card .footer strong {
+  color: #337ab7;
+}
+.card {
+  margin-bottom: 7px;
+}
