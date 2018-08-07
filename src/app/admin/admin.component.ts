@@ -19,7 +19,7 @@ export class AdminComponent implements OnInit {
     private route: ActivatedRoute,
     public router: Router,
     private adminService: AdminService
-  ) { this.getDashbordNumbers() }
+  ) { this.getDashbordNumbers(); }
 
   ngOnInit() {
     this.loginUrl = this.route.snapshot.queryParams['loginUrl'] || '/login';

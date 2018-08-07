@@ -31,8 +31,8 @@ export class UserProductsComponent implements OnInit {
     this.usersService.getUser(userObj).subscribe(
       res => {
         this.user = res;
-        this.societyBenefit =  this.user.filter( data => data.NAME === 'SOCIETY-BENEFIT')[0].VALUE;
-        this.groceryBenefit = this.user.filter( data => data.NAME === 'GROCERY-BENEFIT')[0].VALUE;
+        this.societyBenefit =  res.custom_field_grocery_benefit[0];
+        this.groceryBenefit = res.custom_field_society_benefit[0];
         console.log('Res: ', res);
         console.log('this.societyBenefit: ', this.societyBenefit);
         console.log('this.groceryBenefit: ', this.groceryBenefit);
