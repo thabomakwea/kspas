@@ -37,11 +37,21 @@ export class AdminComponent implements OnInit {
     this.adminService.getDashboardNumbers().subscribe(
       res => {
         console.log('Dashboard: ', res);
-        this.countDashboard = res;
+        // this.countDashboard = JSON.parse( JSON.stringify(res));
+        this.initializeCountDashboardData(JSON.parse( JSON.stringify(res)));
       },
       error => {
         console.log('Dashboard: ', error);
       }
     );
+  }
+  initializeCountDashboardData(res) {
+    const countDashboard = {
+      users: (res.users) ? res.users.total_users : null,
+      dependents: (res.dependents) ? res.dependents.publish :  null,
+      products: (res.products) ? res.products.publish : null
+    };
+
+    this.countDashboard = countDashboard;
   }
 }

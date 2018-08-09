@@ -34,6 +34,9 @@ export class NewUserComponent implements OnInit {
       'confirmPassword' : [null, Validators.required],
       'email' : [null, Validators.required],
       'username' : [null, Validators.required],
+      'idNumber' : [null, Validators.required],
+      'society_benefit' : [null, Validators.required],
+      'grocery_benefit' : [null, Validators.required],
     });
     this.rForm.valueChanges.subscribe(
       (res) => {
@@ -47,8 +50,11 @@ export class NewUserComponent implements OnInit {
 
   addUser(form) {
     console.log('Form: ', form);
+    this.rForm.disable();
+    this.disableSubmitBtn = true;
     this.newUserService.newUser(this.formObj).subscribe(
       res => {
+        window.scroll(0, 0);
         console.log('res', res);
         this.rForm.enable();
         this.rForm.reset();
@@ -59,8 +65,14 @@ export class NewUserComponent implements OnInit {
         });
       },
       err => {
+        window.scroll(0, 0);
+        this.rForm.enable();
+        this.rForm.reset();
         console.log('res', err);
       }
     );
+  }
+  isValidForm() {
+    return this.rForm.valid;
   }
 }

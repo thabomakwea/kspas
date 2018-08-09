@@ -53,6 +53,7 @@ export class AppComponent implements OnInit {
   public logoutLink = false;
   public actions = [];
   public dashboardUrl;
+  user: any;
   constructor(
     public loginService: LoginService,
     public router: Router,
@@ -62,8 +63,10 @@ export class AppComponent implements OnInit {
     console.log('actions: ', this.actions);
     this.loginUrl = this.route.snapshot.queryParams['loginUrl'] || '/login';
     this.navOptions = {};
+    this.user = JSON.parse( localStorage.getItem('userData'));
     this.subscription = this.loginService.loginStream$.subscribe(
       res => {
+        console.log('User Log in: ', res);
         if (res.roles[0] === 'administrator') {
           this.navOptions = this.menu.loggedIn.admin;
           this.logoutLink = true;

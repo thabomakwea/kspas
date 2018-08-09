@@ -29,7 +29,7 @@ export class DependentsService {
   constructor(private http: HttpClient) { }
 
   getDependents(): Observable<any> {
-    return this.http.get(this.url, httpOptions)
+    return this.http.post(this.url, httpOptions)
       .map( res => {
         return res;
       }, err => {
