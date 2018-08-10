@@ -1,4 +1,13 @@
-<div class="panel panel-default panel-table">
+<div *ngIf="!loadDependents">
+  <div class="alert alert-warning">
+    <strong>Action required:</strong> Please download and submit the following application form(s) to add your dependents.
+    <p>&nbsp;</p>
+    <ul>
+      <li><a target="_blank" href="http://kspas.co.za/wp-content/uploads/2018/07/Kspas-CashBenefit.pdf" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Download pdf | Funeral Application Form</a> </li>
+    </ul>
+  </div>
+</div>
+<div class="panel panel-default panel-table" *ngIf="loadDependents">
   <div class="panel-heading">
     <div class="row">
       <div class="col col-xs-6">
@@ -26,11 +35,11 @@
                   </button>
                 </td>
                 <td class="hidden-xs">
-                  {{dependent.custom_fields.ct_name_text_e394[0]}}
-                  {{dependent.custom_fields.ct_Last_name_text_3960[0]}}
+                  {{dependent.ct_name_text_e394[0]}}
+                  {{dependent.ct_Last_name_text_3960[0]}}
                 </td>
-                <td>{{dependent.custom_fields.ct_Dependent__text_c916[0]}}</td>
-                <td>{{dependent.custom_fields.ct_Date_of_bi_text_e345[0]}}</td>
+                <td> {{ (dependent.ct_Dependent__text_c916[0] === '2') ? 'Child' : 'Spouse' }}</td>
+                <td>{{dependent.ct_Date_of_bi_text_e345[0]}}</td>
               </tr>
             </tbody>
     </table>
@@ -62,6 +71,12 @@
       </li>
       <li class="list-group-item text-right">
         <span class="pull-left"><strong>Date of birth: </strong></span> {{dependent.dob}}
+      </li>
+      <li class="list-group-item text-right">
+        <span class="pull-left"><strong>Dependent Type: </strong></span> {{ (dependent.dependentType === '2') ? 'Child' : 'Spouse'}}
+      </li>
+      <li class="list-group-item text-right">
+        <span class="pull-left"><strong>Main member ID: </strong></span> {{dependent.mainMemeberId}} - {{user.data.display_name}}
       </li>
     </ul>
   </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Observable, timer } from 'rxjs';
 import { Router,  NavigationExtras, ActivatedRoute } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,6 +13,11 @@ import { LoginService } from '../../common/services/login.service';
 export class RegisterComponent implements OnInit {
     rForm: FormGroup;
     formObj: any;
+    serverError = false;
+    errorMessages = [];
+    serverSuccess = false;
+    spinnerLoading = false;
+
   constructor(private fb: FormBuilder, private authenticationservice: LoginService) {
     this.rForm = fb.group({
       'username' : [null, Validators.required],
@@ -27,14 +33,35 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
   register(form) {
+    this.serverSuccess = false;
+    this.serverError = false;
+    this.spinnerLoading = true;
+    this.rForm.disable();
     console.log('form: ', form);
     this.authenticationservice.registerUser(form).subscribe(
       res => {
         console.log('resLogin: ' , res);
+        this.rForm.enable();
+          this.rForm.reset();
+          this.spinnerLoading = false;
+        if (res.constructor === Array) {
+          console.log('Array: True');
+          this.serverError = true;
+          res.forEach(element => {
+            this.errorMessages.push(element);
+          });
+        } else {
+          this.serverSuccess = true;
+        }
+
       },
        err => {
+        this.spinnerLoading = false;
         return err;
       }
     );
+  }
+  closeServerError() {
+    this.serverError = false;
   }
 }

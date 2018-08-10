@@ -12,6 +12,8 @@ import { LoginService } from '../../common/services/login.service';
 export class ForgotComponent implements OnInit {
   rForm: FormGroup;
   formObj: any;
+  serverError = false;
+  errorMessages = [];
 
   constructor(private fb: FormBuilder, private authenticationservice: LoginService) {
     this.rForm = fb.group({
@@ -30,9 +32,12 @@ export class ForgotComponent implements OnInit {
     console.log('form: ', form);
     this.authenticationservice.forgotPassword(form).subscribe(
       res => {
+        this.serverError = false;
         console.log('forgotPassword: ' , res);
       },
        err => {
+        this.serverError = true;
+        console.log('Error: ', err );
         return err;
       }
     );

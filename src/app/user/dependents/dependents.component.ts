@@ -14,6 +14,7 @@ export class UserDependentsComponent implements OnInit {
   public dependent: any;
   public user;
   modalRef: BsModalRef;
+  loadDependents = false;
   constructor(private dependentsService: DependentsService, private modalService: BsModalService) { }
 
   ngOnInit() {
@@ -22,12 +23,17 @@ export class UserDependentsComponent implements OnInit {
   }
   getDependents() {
     const dependentObj = {
-      userId: {'meta_key': 'ct_Main_membe_text_a55f', 'meta_value': this.user.ID }
+      userId: {'meta_key': 'ct_Main_membe_text_a55f', 'user_id': this.user.ID}
     };
     this.dependentsService.getUsersDependents(dependentObj).subscribe(
       res => {
-        this.dependents = res.posts;
-        console.log('Res: ', res.posts);
+        if (res.lentgh > 0) { this.loadDependents = true; }
+        this.dependents = res.map(
+          data => {
+            return data.dependentMeta;
+          }
+        );
+        console.log('Res: ', this.dependents);
       },
       err => {
         console.log('Err: ', err);
@@ -35,13 +41,14 @@ export class UserDependentsComponent implements OnInit {
       );
     }
     openModal(template: TemplateRef<any>, dependent) {
+      console.log('dependent:', dependent);
       const dependentObj = {
-        firstName: dependent.custom_fields.ct_name_text_e394[0],
-        lastName: dependent.custom_fields.ct_Last_name_text_3960[0],
-        dob: dependent.custom_fields.ct_Date_of_bi_text_e345[0],
-        dependentType: dependent.custom_fields.ct_Dependent__text_c916[0],
-        idNumber: dependent.custom_fields.ct_ID_text_e7e5[0],
-        mainMemeberId: dependent.custom_fields.ct_Main_membe_text_a55f[0]
+        firstName: dependent.ct_name_text_e394[0],
+        lastName: dependent.ct_Last_name_text_3960[0],
+        dob: dependent.ct_Date_of_bi_text_e345[0],
+        dependentType: dependent.ct_Dependent__text_c916[0],
+        idNumber: dependent.ct_ID_text_e7e5[0],
+        mainMemeberId: dependent.ct_Main_membe_text_a55f[0]
       };
       this.dependent = dependentObj;
       this.modalRef = this.modalService.show(template);

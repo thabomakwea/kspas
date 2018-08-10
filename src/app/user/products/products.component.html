@@ -1,3 +1,13 @@
+<div *ngIf="societyBenefit === 'false' && groceryBenefit === 'false'">
+  <div class="alert alert-warning">
+    <strong>Action required:</strong> Please download and submit the following application form(s) to activate your benefit.
+    <p>&nbsp;</p>
+    <ul>
+      <li><a target="_blank" href="http://kspas.co.za/wp-content/uploads/2018/08/groceriesBenefit.pdf" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Download pdf | Grocery Application Form</a> </li>
+    </ul>
+  </div>
+</div>
+
 <div class="col-md-4">
 
 <div class="card hovercard" *ngIf="societyBenefit === 'true'">

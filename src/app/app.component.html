@@ -20,7 +20,7 @@
               </a>
           </li>
           <li *ngIf="logoutLink">
-              <a href="javascript:void(0)" id="basic-link" (click)="logout($event)">
+              <a href="javascript:void(0)" id="basic-link" (click)="logout($event, true)">
                 <i class="glyphicon glyphicon-off"></i>
                 Logout
               </a>
@@ -57,8 +57,8 @@
 </div>
   <!-- <h4 >{{pageTitle}}</h4> -->
   <div class="row" *ngIf="logoutLink">
-    <div class="alert alert-primary"  *ngIf="user.data">
-        <strong>Welcome:</strong> {{user.data.display_name}}
+    <div class="alert alert-primary" >
+        <strong>Welcome:</strong> {{userDisplayName}}
       </div>
   </div>
 

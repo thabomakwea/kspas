@@ -1,5 +1,16 @@
+
     <div class="main">
       <h3>Create a free KSPAS account</h3>
+      <div class="alert alert-danger" *ngIf="serverError">
+        <a href="javascript:void(0)" class="pull-right" (click)="closeServerError()">&times;</a>
+        <div *ngFor="let errorMessage of errorMessages" >
+          <p [innerHTML]="errorMessage"></p>
+        </div>
+      </div>
+      <div class="alert alert-success" *ngIf="serverSuccess">
+          <a href="#" class="pull-right">&times;</a>
+          <strong>Success:</strong> Please check your email, we have sent you a link to create a new password.
+        </div>
       <form role="form" [formGroup] ="rForm"  (ngSubmit)="register(rForm.value)">
         <div class="form-group">
           <label for="inputUsernameEmail">Username</label>
@@ -15,14 +26,15 @@
       </form>
 
       <div class="row">
+        <p>&nbsp;</p>
         <p class="text-center">
             By clicking the 'Sign Up' button, you confirm that you accept our
             Terms of use and Privacy Policy.
         </p>
         <p class="text-center">
-            Have an account? <a href="javascript:void(0)" routerLink="/login" >Log In herenpm </a>
+            Have an account? <a href="javascript:void(0)" routerLink="/login" >Log In here </a>
         </p>
 
       </div>
-
-{{ formObj | json}}
+      <div class="loading" *ngIf="spinnerLoading">Loading&#8230;</div>
+<!-- {{ formObj | json}} -->

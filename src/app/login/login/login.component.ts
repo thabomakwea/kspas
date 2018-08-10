@@ -31,6 +31,9 @@ export class LoginComponent implements OnInit {
   loginUrl: string;
   formObj: any;
   userLoading = false;
+  serverError = false;
+  errorMessages = [];
+
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -65,7 +68,11 @@ export class LoginComponent implements OnInit {
    this.rForm.disable();
      this.authenticationservice.login(loginObj).subscribe(
         res => {
-          console.log('resLogin: ' , res);
+          console.log('resLogin: ' , typeof res);
+          if (res.constructor === Array) {
+            console.log('Array: True');
+            this.serverError = true;
+          }
           this.authenticationservice.loginChange(res);
           if (res.roles[0] === 'administrator') {
             localStorage.setItem('adminData', JSON.stringify(res));
@@ -82,6 +89,7 @@ export class LoginComponent implements OnInit {
           });
         },
          err => {
+          console.log('Error: ', err);
           this.rForm.enable();
           this.rForm.reset();
           timer(3000).subscribe(() => {

@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   spinner =  false;
   loginUrl: any;
   pageTitle = 'Dashboard';
+  userDisplayName: any;
   pageIcon = 'dashboard';
   navOptions: any;
   subscription: Subscription;
@@ -53,20 +54,24 @@ export class AppComponent implements OnInit {
   public logoutLink = false;
   public actions = [];
   public dashboardUrl;
-  user: any;
+  user = JSON.parse( localStorage.getItem('userData'));
   constructor(
     public loginService: LoginService,
     public router: Router,
     public route: ActivatedRoute,
-  ) {}
+  ) {
+
+  }
   ngOnInit() {
+    this.user = JSON.parse( localStorage.getItem('userData'));
     console.log('actions: ', this.actions);
+    console.log('this.user: ', this.user);
     this.loginUrl = this.route.snapshot.queryParams['loginUrl'] || '/login';
     this.navOptions = {};
-    this.user = JSON.parse( localStorage.getItem('userData'));
     this.subscription = this.loginService.loginStream$.subscribe(
       res => {
-        console.log('User Log in: ', res);
+        console.log('RES: ', res.data.display_name);
+        this.userDisplayName = res.data.display_name;
         if (res.roles[0] === 'administrator') {
           this.navOptions = this.menu.loggedIn.admin;
           this.logoutLink = true;
@@ -84,10 +89,13 @@ export class AppComponent implements OnInit {
       this.logout();
     }
   }
-  logout (event?: any) {
+  logout (event?: any, link?: boolean) {
     localStorage.removeItem('adminData');
     localStorage.removeItem('userData');
     this.router.navigate([this.loginUrl]);
+    if (link) {
+      // location.reload();
+    }
     this.logoutLink = false;
     console.log('Logout:::clicked');
   }

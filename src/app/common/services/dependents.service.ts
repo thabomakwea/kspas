@@ -19,7 +19,7 @@ const httpOptions = {
 export class DependentsService {
   private dependentsSource = new Subject<any>();
   private url = 'http://kspas.co.za/api/get_recent_posts?post_type=dependents';
-  private urlUser = 'http://kspas.co.za/api/get_recent_posts?post_type=dependents&';
+  private urlUser = 'http://kspas.co.za/wp-json/custom-plugin/v1/getDependents?';
   private urlNewDependent = 'http://kspas.co.za/wp-json/custom-plugin/v1/newDependent?';
   private urlUpdateDependent = 'http://kspas.co.za/wp-json/custom-plugin/v1/updateDependent?';
   private urlDeleteDependent = 'http://kspas.co.za/wp-json/custom-plugin/v1/deleteDependent?';
@@ -65,7 +65,7 @@ export class DependentsService {
   }
   getUsersDependents(dependentObj): Observable<any> {
     const body = this.serializeObj(dependentObj.userId);
-    return this.http.get(this.urlUser + body, httpOptions)
+    return this.http.post(this.urlUser + body, httpOptions)
       .map( res => {
         return res;
       }, err => {
