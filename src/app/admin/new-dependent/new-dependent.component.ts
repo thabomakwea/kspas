@@ -24,7 +24,6 @@ export class NewDependentComponent implements OnInit {
   formObj: any;
   dependentAdded: boolean;
   public disableSubmitBtn = true;
-
   constructor(private fb: FormBuilder, private dependentsService: DependentsService) {
     this.rForm = fb.group({
       'firstName' : [null, Validators.required],
@@ -79,7 +78,7 @@ export class NewDependentComponent implements OnInit {
       key: searchValue,
       post_type: 'users'
     };
-    this.dependentsService.searchDependents(searchObj).subscribe(
+    this.dependentsService.searchUsers(searchObj).subscribe(
       res => {
         this.dependents = res;
         console.log('Res: ', res);
@@ -87,6 +86,6 @@ export class NewDependentComponent implements OnInit {
       err => {
         console.log('Err: ', err);
       }
-      );
+    );
   }
 }

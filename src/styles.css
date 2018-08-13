@@ -15,8 +15,12 @@ header .logo {
     width: 300px;
 }
 header .menu {
-    float: right;
-    margin-top: 8px;
+  float: right;
+  margin-top: 8px;
+  display: block;
+}
+header .menu.active {
+  display: block;
 }
 header .menu li {
     display: inline-block;
@@ -42,6 +46,7 @@ header .menu li a, header .menu li button.menu-element {
     outline: none;
     display: inline-block;
 }
+
 header .menu-responsive {
     color: #fff;
     text-align: right;
@@ -49,6 +54,43 @@ header .menu-responsive {
     padding-top: 28px;
     float: right;
     cursor: pointer;
+    display: none;
+}
+
+nav.clearfix {
+  position: relative;
+}
+@media only screen and (max-width: 950px) {
+  header .menu-responsive {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+  }
+  header .menu {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background-color: #337ab7;
+    border-radius: 4px;
+    margin-top: 20px;
+    padding: 0;
+    z-index: 9999;
+    display: none;
+  }
+  header .menu li {
+    display: block;
+    border-bottom: 1px solid #fff;
+    width: 100%;
+    padding: 8px 20px;
+  }
+  header .menu li a {
+    padding: 0px;
+    display: block;
+  }
+  a.btn.btn-primary.btn-block {
+    margin-bottom: 30px;
+  }
 }
 /*Dropdown*/
 .dropdown-menu a.dropdown-item {
@@ -130,6 +172,12 @@ footer ul {
   margin:0;
 }
 
+@media only screen and (max-width: 950px) {
+  .panel.panel-default.panel-table .col-md-6.text-right {
+    text-align: left;
+    margin-top: 15px;
+  }
+}
 /*
 used to vertically center elements, may need modification if you're not using default sizes.
 */

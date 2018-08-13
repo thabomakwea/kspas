@@ -26,6 +26,12 @@ export class DependentsComponent implements OnInit {
   rForm: FormGroup;
   formObj: any;
   public queryString: any;
+  public configTable = {
+    totalPages: [],
+    currentPage: 1,
+    totalRecords: 0
+  };
+
   constructor(private fb: FormBuilder, private dependentsService: DependentsService, private modalService: BsModalService) {
     this.rForm = fb.group({
       'firstName' : [null, Validators.required],
@@ -53,8 +59,17 @@ export class DependentsComponent implements OnInit {
   getDependents() {
     this.dependentsService.getDependents().subscribe(
       res => {
-        this.dependents = res.posts;
-        console.log('Res: ', res.posts);
+        console.log('Res Load dependents: ', res);
+        this.dependents = res.posts.map(
+          dependent => {
+            return dependent.custom_fields;
+          }
+        );
+        console.log('Load Dependents: ', this.dependents);
+        // this.configTable.totalPages = res.pages;
+        for (let i = 0 ; i < res.pages; i++) {
+          this.configTable.totalPages.push('');
+        }
       },
       err => {
         console.log('Err: ', err);
@@ -63,7 +78,7 @@ export class DependentsComponent implements OnInit {
     }
     openModal(template: TemplateRef<any>, dependent, action?: string) {
       console.log('dependent: ', dependent);
-      this. initializeDependentData(dependent);
+      this. initializeDependentData(dependent.custom_fields);
       if (action) { if ( action === 'edit') { this.prepopulateUsersData(this.dependentData); } }
       if (action) { if ( action === 'delete') { this.dependentID = dependent.id; } }
       this.modalRef = this.modalService.show(template);
@@ -71,12 +86,12 @@ export class DependentsComponent implements OnInit {
     initializeDependentData(dependent) {
       console.log('dependent: ', dependent);
       const dependentObj = {
-        'firstName' : dependent.custom_fields.ct_name_text_e394[0],
-        'lastName' : dependent.custom_fields.ct_Last_name_text_3960[0],
-        'idNumber' : dependent.custom_fields.ct_ID_text_e7e5[0],
-        'dependentType' : dependent.custom_fields.ct_Dependent__text_c916[0],
-        'dob' : dependent.custom_fields.ct_Date_of_bi_text_e345[0],
-        'mainMemberID' : dependent.custom_fields.ct_Main_membe_text_a55f[0],
+        'firstName' : dependent.ct_name_text_e394[0],
+        'lastName' : dependent.ct_Last_name_text_3960[0],
+        'idNumber' : dependent.ct_ID_text_e7e5[0],
+        'dependentType' : dependent.ct_Dependent__text_c916[0],
+        'dob' : dependent.ct_Date_of_bi_text_e345[0],
+        'mainMemberID' : dependent.ct_Main_membe_text_a55f[0],
         'regDate' : dependent.date,
         'post_id' : dependent.id
       };
@@ -87,22 +102,41 @@ export class DependentsComponent implements OnInit {
       console.log('dependentDataKeys: ', Object.keys(dependentData).length);
       this.rForm.patchValue(dependentData);
     }
-    onSearchChange(searchValue: string ) {
+    onSearchChange(searchValue: string, pageNumber?: any ) {
       console.log(searchValue);
-      // const searchObj = {
-      //   key: searchValue,
-      //   post_type: 'dependents',
-      // };
+      const searchObj = {
+        key: searchValue,
+        pageNumber: pageNumber
+      };
 
-      // this.dependentsService.searchDependents(searchObj).subscribe(
-      // res => {
-      //   // this.dependents = res.posts;
-      //   console.log('Res: ', res);
-      // },
-      // err => {
-      //   console.log('Err: ', err);
-      // }
-      // );
+      this.dependentsService.searchDependents(searchObj).subscribe(
+      res => {
+        // this.dependents = res.posts;
+        console.log('Res search dependents: ', res);
+        const dependents =  res[0].dependents.map(
+          dependent => {
+            return dependent.dependentMeta;
+          }
+        );
+
+        console.log('search dependents: ', dependents);
+        this.dependents = dependents;
+
+        if (pageNumber) {
+          this.configTable.currentPage = pageNumber;
+        }
+        if (res[0].results) {
+          this.configTable.totalPages = [];
+          this.configTable.currentPage = 1;
+          for (let i = 0 ; i < res[0].results.max_num_pages; i++) {
+            this.configTable.totalPages.push('');
+          }
+        }
+      },
+      err => {
+        console.log('Err: ', err);
+      }
+      );
     }
     updateDependent(form) {
      //  console.log('form: ', form);

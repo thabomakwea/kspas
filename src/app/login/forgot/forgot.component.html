@@ -1,9 +1,14 @@
-<div class="alert alert-danger" *ngIf="serverError">
-  <a href="#" class="pull-right">&times;</a>
-  <strong>Error:</strong>
-</div>
+
 <div class="main">
   <h3>Forgot your password?</h3>
+  <div class="alert alert-danger" *ngIf="serverError">
+      <a href="javascript:void(0)" class="pull-right" (click)="closeServerError()">&times;</a>
+      <strong>Error:</strong> The email address does not exist, please create a new account
+    </div>
+    <div class="alert alert-success" *ngIf="serverSuccess">
+      <a href="javascript:void(0)" class="pull-right" (click)="closeServerSuccess()">&times;</a>
+      <strong>Success:</strong> Please check your email, we have sent you a link to reset your password
+    </div>
   <form role="form" [formGroup] ="rForm"  (ngSubmit)="forgot(rForm.value)">
     <div class="form-group">
       <label>Username or password</label>
@@ -15,6 +20,7 @@
   </form>
 
   <div class="row">
+    <p>&nbsp;</p>
     <p class="text-center">
         After clicking the 'forget password' button, you'll receive an email from KSPAS to change your password.
     </p>
@@ -22,4 +28,5 @@
       <a href="javascript:void(0)" routerLink="/login" >Back to login page </a>
   </p>
   </div>
+  <div class="loading" *ngIf="spinnerLoading">Loading&#8230;</div>
 <!-- {{ formObj | json}} -->

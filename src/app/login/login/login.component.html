@@ -1,10 +1,19 @@
-<div class="alert alert-danger" *ngIf="serverError">
-  <a href="#" class="pull-right">&times;</a>
-  <strong>Error:</strong>
-</div>
+
     <div class="main">
       <h3>Please Log In, or <a href="javascript:void(0)" routerLink="/register"> Sign Up</a></h3>
       <div class="callout warning" *ngIf="loginError"> {{ loginAlert }}</div>
+      <div class="alert alert-danger" *ngIf="serverError">
+          <a href="javascript:void(0)" class="pull-right"  (click)="closeServerError()">&times;</a>
+          <div *ngFor="let errorMessage of errorMessages" >
+            <p [innerHTML]="errorMessage"></p>
+          </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="serverSuccess">
+            <a href="javascript:void(0)" class="pull-right"  (click)="closeServerSuccess()">&times;</a>
+            <div>
+              <p><strong>Success:</strong> Login successfull</p>
+            </div>
+          </div>
       <form role="form" [formGroup] ="rForm"  (ngSubmit)="login(rForm.value)">
         <div class="form-group">
           <label for="inputUsernameEmail">Username or email</label>

@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
   userLoading = false;
   serverError = false;
   errorMessages = [];
+  serverSuccess = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -59,7 +60,12 @@ export class LoginComponent implements OnInit {
     this.userUrl = this.route.snapshot.queryParams['userUrl'] || '/user';
     this.loginUrl = this.route.snapshot.queryParams['loginUrl'] || '/login';
   }
-
+  closeServerError() {
+    this.serverError = false;
+  }
+  closeServerSuccess() {
+    this.serverSuccess = false;
+  }
   login(form) {
     const loginObj: LoginObj = {
       login: this.formObj
@@ -68,22 +74,31 @@ export class LoginComponent implements OnInit {
    this.rForm.disable();
      this.authenticationservice.login(loginObj).subscribe(
         res => {
-          console.log('resLogin: ' , typeof res);
-          if (res.constructor === Array) {
-            console.log('Array: True');
-            this.serverError = true;
-          }
-          this.authenticationservice.loginChange(res);
-          if (res.roles[0] === 'administrator') {
-            localStorage.setItem('adminData', JSON.stringify(res));
-            this.router.navigate([this.adminUrl]);
+          console.log('resLogin: ' , res);
+          if  (res.roles) {
+            this.serverSuccess = true;
+            if (res.roles[0] === 'administrator') {
+              this.authenticationservice.loginChange(res);
+              localStorage.setItem('adminData', JSON.stringify(res));
+              this.router.navigate([this.adminUrl]);
+            } else if (res.roles[0] === 'subscriber') {
+              this.authenticationservice.loginChange(res);
+              localStorage.setItem('userData', JSON.stringify(res));
+              this.router.navigate([this.userUrl]);
+            }
           } else {
-            localStorage.setItem('userData', JSON.stringify(res));
-            this.router.navigate([this.userUrl]);
+
+            if (res.constructor === Array) {
+              console.log('Array: True');
+              this.serverError = true;
+              res.forEach(element => {
+                this.errorMessages.push(element);
+              });
+            }
+
           }
           //
           this.rForm.enable();
-          this.rForm.reset();
           timer(3000).subscribe(() => {
             this.userLoading = false;
           });

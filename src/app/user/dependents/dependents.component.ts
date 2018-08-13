@@ -27,13 +27,13 @@ export class UserDependentsComponent implements OnInit {
     };
     this.dependentsService.getUsersDependents(dependentObj).subscribe(
       res => {
-        if (res.lentgh > 0) { this.loadDependents = true; }
         this.dependents = res.map(
           data => {
             return data.dependentMeta;
           }
         );
         console.log('Res: ', this.dependents);
+        if (this.dependents.length > 0) { this.loadDependents = true; }
       },
       err => {
         console.log('Err: ', err);

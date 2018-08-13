@@ -5,15 +5,15 @@
 <div class="panel panel-default panel-table">
 <div class="panel-heading">
   <div class="row">
-    <div class="col col-xs-6 text-left"  id="custom-search-form" >
+    <div class="col-md-6 text-left"  id="custom-search-form" >
         <!--<form id="custom-search-form" class="form-search form-horizontal pull-left">-->
             <div class="input-append span12">
-                <input type="text" class="search-query mac-style" placeholder="Search"  [(ngModel)]="queryString">
+                <input type="text" class="search-query mac-style" placeholder="Search" (input)="onSearchChange($event.target.value)">
                 <button type="submit" class="btn"><i class="glyphicon glyphicon-search"></i></button>
             </div>
         <!--</form>-->
       </div>
-    <div class="col col-xs-6 text-right">
+    <div class="col-md-6 text-right">
       <a routerLink="/admin/new-user" class="btn btn-sm btn-primary btn-create">
         <i class="glyphicon glyphicon-plus"></i>
         Create New
@@ -21,26 +21,26 @@
     </div>
   </div>
 </div>
-<div class="panel-body">
+<div class="panel-body table-responsive">
   <table class="table table-striped table-bordered table-list">
     <thead>
       <tr>
           <th><em class="fa fa-cog"></em></th>
-          <th class="hidden-xs">ID</th>
           <th>Name</th>
-          <th>Email</th>
+          <th>ID number</th>
+          <th>Cellphone</th>
       </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let user of users | filterdata: queryString : 'display_name' ; let i = index">
+        <tr *ngFor="let user of users; let i = index">
           <td align="center">
-            <a class="btn btn-primary actions" (click)="openModal(template, user)"><i class="glyphicon glyphicon-eye-open"></i></a>
-            <a class="btn btn-default actions" (click)="openModal(templateEdit, user, 'edit')"><i class="glyphicon glyphicon-pencil"></i></a>
+            <a class="btn btn-primary actions" (click)="openModal(template, i)"><i class="glyphicon glyphicon-eye-open"></i></a>
+            <a class="btn btn-default actions" (click)="openModal(templateEdit, i, 'edit')"><i class="glyphicon glyphicon-pencil"></i></a>
             <!-- <a class="btn btn-danger actions"><i class="glyphicon glyphicon-trash"></i></a> -->
           </td>
-          <td class="hidden-xs">{{user.ID}}</td>
-          <td>{{user.display_name}}</td>
-          <td>{{user.user_email}}</td>
+          <td>{{user.custom_field_first_name[0]}} {{user.custom_field_last_name[0]}}</td>
+          <td>{{user.custom_field_idnumber[0]}}</td>
+          <td>{{user.custom_field_cellphone[0]}}</td>
         </tr>
     </tbody>
   </table>
@@ -48,7 +48,7 @@
 </div>
 <div class="panel-footer">
   <div class="row">
-    <div class="col col-xs-4">Page 1 of 5
+    <div class="col col-xs-4">Page {{configTable.currentPage}} of {{configTable.totalPages.length}}
     </div>
     <div class="col col-xs-8">
       <ul class="pagination hidden-xs pull-right">

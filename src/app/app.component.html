@@ -5,15 +5,15 @@
           <img src="http://kspas.co.za/wp-content/uploads/2018/06/logo-6.png" alt="KSPAS">
       </a>
       </div>
-      <nav>
-        <ul class="menu" *ngIf="logoutLink">
-          <li *ngIf="logoutLink">
+      <nav class="clearfix">
+        <ul class="menu" [ngClass]="responsiveButton === true ? 'active' : ''">
+          <li *ngIf="logoutLink" (click)="responsiveMenu()">
               <a href="javascript:void(0)" id="basic-link" (click)="navDashboard()"  [routerLink]="dashboardUrl">
                 <i class="glyphicon glyphicon-dashboard"></i>
                 Dashboard
               </a>
           </li>
-          <li *ngFor="let navOption of navOptions ">
+          <li *ngFor="let navOption of navOptions " (click)="responsiveMenu()">
               <a href="javascript:void(0)"  id="basic-link" (click)="navLink(navOption)" routerLink="{{navOption.link}}">
                <i class="glyphicon glyphicon-{{navOption.icon}}"></i>
                 {{navOption.label}}
@@ -26,8 +26,7 @@
               </a>
           </li>
         </ul>
-        <div class="menu-resp
-        onsive">
+        <div class="menu-responsive" (click)="responsiveMenu()">
           <i class="fa fa-bars"></i>
         </div>
       </nav>

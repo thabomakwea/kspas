@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { LoginService } from './common/services/login.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Router,  NavigationExtras, ActivatedRoute } from '@angular/router';
@@ -17,20 +17,12 @@ export class AppComponent implements OnInit {
   pageIcon = 'dashboard';
   navOptions: any;
   subscription: Subscription;
+  responsiveButton = false;
   menu = {
     loggedOut: [
-       { label: 'Home', link: 'http://kspas.co.za/'},
-       { label: 'About', link: 'http://kspas.co.za/about/'},
-       { label: 'Services', link: 'http://kspas.co.za/services/'},
-       {
-         label: 'Products',
-         dropdown: [
-           { label: 'Society Benefit', link: 'http://kspas.co.za/society-benefit/'},
-           { label: 'Grocery Benefit', link: 'http://kspas.co.za/grocery-benefit/'},
-         ]
-        },
-       { label: 'Downloads', link: 'http://kspas.co.za/downloads/'},
-       { label: 'Contacts', link: 'http://kspas.co.za/'},
+       { label: 'Login', link: '/login', actions: []},
+       { label: 'Register', link: '/register', actions: []},
+       { label: 'Back to main site', link: 'http://kspas.co.za/', actions: []}
     ],
     loggedIn: {
       user: [
@@ -55,6 +47,7 @@ export class AppComponent implements OnInit {
   public actions = [];
   public dashboardUrl;
   user = JSON.parse( localStorage.getItem('userData'));
+
   constructor(
     public loginService: LoginService,
     public router: Router,
@@ -67,7 +60,7 @@ export class AppComponent implements OnInit {
     console.log('actions: ', this.actions);
     console.log('this.user: ', this.user);
     this.loginUrl = this.route.snapshot.queryParams['loginUrl'] || '/login';
-    this.navOptions = {};
+    this.navOptions = this.menu.loggedOut;
     this.subscription = this.loginService.loginStream$.subscribe(
       res => {
         console.log('RES: ', res.data.display_name);
@@ -82,19 +75,30 @@ export class AppComponent implements OnInit {
           this.dashboardUrl = '/user';
         } else {
           this.navOptions = {};
+          this.logout();
         }
+      },
+      err => {
+        this.dashboardUrl = '/login';
+        this.logout();
       }
     );
     if (Object.keys(this.navOptions).length === 0) {
       this.logout();
     }
+    if (this.navOptions === this.menu.loggedOut) {
+      this.logout();
+    }
   }
   logout (event?: any, link?: boolean) {
+    this.navOptions = this.menu.loggedOut;
+    this.responsiveButton = false;
     localStorage.removeItem('adminData');
     localStorage.removeItem('userData');
     this.router.navigate([this.loginUrl]);
     if (link) {
       // location.reload();
+
     }
     this.logoutLink = false;
     console.log('Logout:::clicked');
@@ -107,5 +111,9 @@ export class AppComponent implements OnInit {
   navDashboard() {
     this.pageTitle = 'Dashboard';
     this.actions = [];
+  }
+  responsiveMenu() {
+    this.responsiveButton = !this.responsiveButton;
+    console.log(this.responsiveButton);
   }
 }

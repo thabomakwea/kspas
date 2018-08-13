@@ -22,6 +22,13 @@ export class RegisterComponent implements OnInit {
     this.rForm = fb.group({
       'username' : [null, Validators.required],
       'email' : [null, Validators.required],
+      'cellphone' : [null, Validators.required],
+      'telephone' : [null, Validators.required],
+      'idNumber' : [null, Validators.required],
+      'address' : [null, Validators.required],
+      'occupation' : [null, Validators.required],
+      'firstName' : [null, Validators.required],
+      'lastName' : [null, Validators.required],
     });
     this.rForm.valueChanges.subscribe(
       (res) => {
@@ -57,11 +64,20 @@ export class RegisterComponent implements OnInit {
       },
        err => {
         this.spinnerLoading = false;
+        this.serverSuccess = true;
+        this.rForm.enable();
+        this.rForm.reset();
         return err;
+      },
+      () => {
+        this.spinnerLoading = false;
       }
     );
   }
   closeServerError() {
     this.serverError = false;
+  }
+  closeServerSuccess() {
+    this.serverSuccess = false;
   }
 }

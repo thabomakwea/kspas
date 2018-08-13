@@ -18,12 +18,13 @@ const httpOptions = {
 @Injectable()
 export class DependentsService {
   private dependentsSource = new Subject<any>();
-  private url = 'http://kspas.co.za/api/get_recent_posts?post_type=dependents';
+  private url = 'http://kspas.co.za/api/get_recent_posts?post_type=dependents&count=5';
   private urlUser = 'http://kspas.co.za/wp-json/custom-plugin/v1/getDependents?';
   private urlNewDependent = 'http://kspas.co.za/wp-json/custom-plugin/v1/newDependent?';
   private urlUpdateDependent = 'http://kspas.co.za/wp-json/custom-plugin/v1/updateDependent?';
   private urlDeleteDependent = 'http://kspas.co.za/wp-json/custom-plugin/v1/deleteDependent?';
-  private urlSearch = 'http://kspas.co.za/wp-json/custom-plugin/v1/getSearchResults?';
+  private urlSearch = 'http://kspas.co.za/wp-json/custom-plugin/v1/getSearchResultsDependents?';
+  private urlSearchUsers = 'http://kspas.co.za/wp-json/custom-plugin/v1/getSearchResultsUsers?';
   // Observable Streams
  public  dependentsStream$ = this.dependentsSource.asObservable();
   constructor(private http: HttpClient) { }
@@ -76,6 +77,15 @@ export class DependentsService {
   searchDependents(searchObj) {
     const body = this.serializeObj(searchObj);
     return this.http.post(this.urlSearch + body, httpOptions)
+      .map( res => {
+        return res;
+      }, err => {
+        return err;
+      } );
+  }
+  searchUsers(searchObj) {
+    const body = this.serializeObj(searchObj);
+    return this.http.post(this.urlSearchUsers + body, httpOptions)
       .map( res => {
         return res;
       }, err => {

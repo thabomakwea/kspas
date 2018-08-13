@@ -13,7 +13,11 @@ export class AdminComponent implements OnInit {
   public user: AdminLogginData;
   public loginUrl: any;
   pageTitle = 'Dashboard';
-  public countDashboard: any;
+  public countDashboard = {
+    users: {},
+    dependents: {},
+    products: {}
+  };
 
   constructor(
     private route: ActivatedRoute,

@@ -14,6 +14,8 @@ export class ForgotComponent implements OnInit {
   formObj: any;
   serverError = false;
   errorMessages = [];
+  serverSuccess = false;
+  spinnerLoading = false;
 
   constructor(private fb: FormBuilder, private authenticationservice: LoginService) {
     this.rForm = fb.group({
@@ -29,11 +31,20 @@ export class ForgotComponent implements OnInit {
   ngOnInit() {
   }
   forgot(form) {
+    this.rForm.disable();
+    this.spinnerLoading = true;
     console.log('form: ', form);
     this.authenticationservice.forgotPassword(form).subscribe(
       res => {
-        this.serverError = false;
         console.log('forgotPassword: ' , res);
+        this.rForm.enable();
+        this.rForm.reset();
+        this.spinnerLoading = false;
+        if (res === 'SUCCESS') {
+          this.serverSuccess = true;
+        } else {
+          this.serverError = true;
+        }
       },
        err => {
         this.serverError = true;
@@ -41,5 +52,11 @@ export class ForgotComponent implements OnInit {
         return err;
       }
     );
+  }
+  closeServerError() {
+    this.serverError = false;
+  }
+  closeServerSuccess() {
+    this.serverSuccess = false;
   }
 }

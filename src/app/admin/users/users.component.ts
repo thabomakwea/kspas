@@ -36,6 +36,12 @@ export class UsersComponent implements OnInit {
   public queryString: any;
   listSubscription: any;
   userSubscription: any;
+  public configTable = {
+    totalPages: [],
+    currentPage: 1,
+    totalRecords: 0
+  };
+  usersList: any;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient, private usersService: UsersService, private modalService: BsModalService) {
@@ -85,12 +91,14 @@ export class UsersComponent implements OnInit {
   getUsers() {
     this.userSubscription =   this.usersService.getUsers().subscribe(
       res => {
+        console.log('Res: ', res);
+        this.usersList = res;
         this.users = res.map(
           user => {
-            return user.user.data;
+            return user.userMeta;
           }
         );
-        console.log('UsersRes: ',  this.users);
+        console.log('UsersRes: ', this.users);
       },
       err => {
         console.log('UsersErr: ', err);
@@ -100,12 +108,12 @@ export class UsersComponent implements OnInit {
   openModal(template: TemplateRef<any>, user, action?: string) {
     this.getUser(user, template, action);
   }
-  prepopulateUsersData(user) {
+  prepopulateUsersData(user, userData?: any) {
     console.log('prepopulateUsersData: ', user);
     console.log('prepopulateUsersData: ', this.user);
-    this.rForm.get('username').setValue(user.user_login);
-    this.rForm.get('email').setValue(user.user_email);
-    this.rForm.get('user_id').setValue(user.ID);
+    this.rForm.get('username').setValue(userData.user_login);
+    this.rForm.get('email').setValue(userData.user_email);
+    this.rForm.get('user_id').setValue(userData.ID);
 
     (this.user.custom_field_first_name) ?
     this.rForm.get('first_name').setValue(this.user.custom_field_first_name[0]) :
@@ -145,8 +153,8 @@ export class UsersComponent implements OnInit {
   }
   getUser(user, template, action?: any) {
     console.log('user: ', user);
-    console.log('user_id: ', user.ID);
-    const userObj = { 'user_id': user.ID };
+    console.log('user_id: ', this.usersList[user].user.data.ID);
+    const userObj = { 'user_id': this.usersList[user].user.data.ID };
     this.usersService.getUser(userObj).subscribe(
       res => {
         this.user = res;
@@ -158,7 +166,7 @@ export class UsersComponent implements OnInit {
       () => {
         if (action) {
           if ( action === 'edit') {
-            this.prepopulateUsersData(user);
+            this.prepopulateUsersData(user, this.usersList[user].user.data);
           }
         }
         this.initializeUserData(this.user, user);
@@ -191,5 +199,28 @@ export class UsersComponent implements OnInit {
   }
   isValidForm() {
     return this.rForm.valid;
+  }
+  onSearchChange(searchValue: string, pageNumber?: any ) {
+    console.log(searchValue);
+    const searchObj = {
+      key: searchValue,
+      pageNumber: pageNumber
+    };
+
+    this.userSubscription =   this.usersService.getUsers(searchObj).subscribe(
+      res => {
+        console.log('Res: ', res);
+        this.usersList = res;
+        this.users = res.map(
+          user => {
+            return user.userMeta;
+          }
+        );
+        console.log('UsersRes: ', this.users);
+      },
+      err => {
+        console.log('UsersErr: ', err);
+      }
+    );
   }
 }
