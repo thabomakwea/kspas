@@ -1,4 +1,4 @@
-  <!-- <div class="row" *ngIf="totalDependents === 0 || totalProducts === 0">
+  <div class="row" *ngIf="totalDependents === 0 || totalProducts === 0">
       <div class="alert alert-warning" *ngIf="pendingUser">
           <strong>Action required:</strong> Please download and submit the following application form(s) to activate your benefits.
           <p>&nbsp;</p>
@@ -7,7 +7,7 @@
             <li *ngIf="totalProducts === 0"><a target="_blank" href="http://kspas.co.za/wp-content/uploads/2018/08/groceriesBenefit.pdf"><i class="fa fa-file-pdf-o"></i></a> Download pdf | Grocery Application Form</li>
           </ul>
         </div>
-  </div> -->
+  </div>
   <div class="col-md-3 col-md-offset-2">
       <div class="card" [ngClass]="totalDependents === 0 ? 'disabled' : ''">
         <div class="header">
