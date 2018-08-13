@@ -12,6 +12,17 @@ import { UsersService } from '../../common/services/users.service';
 export class ProfileComponent implements OnInit {
   public userData;
   public user;
+  public profile = {
+      firstName: null,
+      lastName: null,
+      address: null,
+      cellphone: null,
+      idNumber: null,
+      occupation: null,
+      telephone: null,
+      societyBenefit: null,
+      groceryBenefit: null,
+  };
 
   constructor(private usersService: UsersService) { }
   ngOnInit() {
@@ -29,10 +40,25 @@ export class ProfileComponent implements OnInit {
       res => {
         this.user = res;
         console.log('Res: ', res);
+        this.initializeProfileData(res);
       },
       err => {
         console.log('Err: ', err);
       }
     );
+  }
+  initializeProfileData(res) {
+    const profileObj = {
+      firstName: res.custom_field_first_name[0],
+      lastName: res.custom_field_last_name[0],
+      address: res.custom_field_address[0],
+      cellphone: res.custom_field_cellphone[0],
+      idNumber: res.custom_field_idnumber[0],
+      occupation: res.custom_field_occupation[0],
+      telephone: res.custom_field_telephone[0],
+      societyBenefit: res.custom_field_society_benefit[0],
+      groceryBenefit: res.custom_field_grocery_benefit[0],
+    };
+    this.profile = profileObj;
   }
 }

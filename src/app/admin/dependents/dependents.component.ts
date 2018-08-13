@@ -112,6 +112,7 @@ export class DependentsComponent implements OnInit {
         this.modalRef.hide();
         this.userUpdated = true;
         this.getDependents();
+        window.scroll(0, 0);
         timer(3000).subscribe(() => {
         // set showloader to false to hide loading div from view after 5 seconds
           this.userUpdated = false;

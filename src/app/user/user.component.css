@@ -17,3 +17,9 @@
 .card {
   margin-bottom: 7px;
 }
+.card.disabled {
+  opacity: 0.5;
+}
+.card.disabled .header i {
+  color: #000000;
+}

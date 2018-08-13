@@ -5,7 +5,7 @@
       <i class="glyphicon glyphicon-user"></i>
     </div>
     <div class="footer">
-      <strong>{{countDashboard.users.total_users}}</strong> Users
+      <strong *ngIf="countDashboard.users">{{countDashboard.users}}</strong> Users
     </div>
   </div>
   <a href="javascript:void(0)" routerLink="/admin/users" class="btn btn-primary btn-block">Viea all users</a>
@@ -16,7 +16,7 @@
         <i class="glyphicon glyphicon-heart"></i>
       </div>
       <div class="footer">
-        <strong>{{countDashboard.dependents.publish}}</strong> Dependents
+        <strong *ngIf="countDashboard.dependents">{{countDashboard.dependents}}</strong> Dependents
       </div>
     </div>
     <a href="javascript:void(0)" routerLink="/admin/dependents" class="btn btn-primary btn-block">Viea all dependents</a>
@@ -27,7 +27,7 @@
         <i class="glyphicon glyphicon-gift"></i>
       </div>
       <div class="footer">
-        <strong>{{countDashboard.products.publish}}</strong> Products
+        <strong *ngIf="countDashboard.products">{{countDashboard.products}}</strong> Products
       </div>
     </div>
     <a href="javascript:void(0)" routerLink="/admin/products" class="btn btn-primary btn-block">Viea all products</a>

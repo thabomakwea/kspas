@@ -48,8 +48,11 @@ export class NewDependentComponent implements OnInit {
   }
   addDependent(form) {
     console.log('form: ', form);
+    this.rForm.disable();
+    this.disableSubmitBtn = true;
     this.dependentsService.addDependent(form).subscribe(
       res => {
+        window.scroll(0, 0);
         console.log('Res: ', res);
         this.rForm.enable();
         this.rForm.reset();
@@ -60,6 +63,7 @@ export class NewDependentComponent implements OnInit {
         });
       },
       err => {
+        window.scroll(0, 0);
         console.log('Err: ', err);
       }
       );

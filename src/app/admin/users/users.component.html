@@ -77,25 +77,39 @@
   </div>
   <div class="modal-body">
     <ul class="list-group">
-      <li class="list-group-item text-right">
-        <span class="pull-left"><strong>Username: </strong></span> {{userData.username}}
+        <li class="list-group-item text-right" *ngIf="userData.username">
+            <span class="pull-left"><strong>Username: </strong></span> {{userData.username}}
+          </li>
+      <li class="list-group-item text-right" *ngIf="userData.lastName">
+        <span class="pull-left"><strong>First name: </strong></span> {{userData.firstName}}
       </li>
-      <li class="list-group-item text-right">
-        <span class="pull-left"><strong>Name: </strong></span> {{userData.fullName}}
+      <li class="list-group-item text-right" *ngIf="userData.lastName">
+        <span class="pull-left"><strong>Last name: </strong></span> {{userData.lastName}}
       </li>
-      <li class="list-group-item text-right">
-        <span class="pull-left"><strong>E-mail: </strong></span> {{userData.email}}
+      <li class="list-group-item text-right" *ngIf="userData.email">
+        <span class="pull-left"><strong>Email: </strong></span> {{userData.email}}
       </li>
-      <li class="list-group-item text-right">
-        <span class="pull-left"><strong>User ID : </strong></span> {{userData.userID}}
+      <li class="list-group-item text-right" *ngIf="userData.cellphone">
+        <span class="pull-left"><strong>Cellphone: </strong></span> {{userData.cellphone}}
       </li>
-
-      <li class="list-group-item text-right" *ngFor="let userMeta of user; let i = index">
-        <span class="pull-left"><strong>{{userMeta.LABEL}}: </strong></span> {{userMeta.VALUE}}
+      <li class="list-group-item text-right" *ngIf="userData.telephone">
+        <span class="pull-left"><strong>Telephone: </strong></span> {{userData.telephone}}
       </li>
-      <li class="list-group-item text-right">
-        <span class="pull-left"><strong>Date registered: </strong></span> {{userData.regDate}}
+      <li class="list-group-item text-right" *ngIf="userData.address">
+        <span class="pull-left"><strong>Address: </strong></span> {{userData.address}}
       </li>
+      <li class="list-group-item text-right" *ngIf="userData.occupation">
+        <span class="pull-left"><strong>Occupation: </strong></span> {{userData.occupation}}
+      </li>
+      <li class="list-group-item text-right" *ngIf="userData.groceryBenefit">
+        <span class="pull-left"><strong>Grocery benefit: </strong></span> {{userData.groceryBenefit}}
+      </li>
+      <li class="list-group-item text-right" *ngIf="userData.societyBenefit">
+        <span class="pull-left"><strong>Society benefit: </strong></span> {{userData.societyBenefit}}
+      </li>
+      <li class="list-group-item text-right" *ngIf="userData.regDate">
+          <span class="pull-left"><strong>Member since: </strong></span> {{userData.regDate}}
+        </li>
     </ul>
   </div>
 </ng-template>
@@ -159,7 +173,7 @@
             <a href="javascript:void(0)" class="btn btn-danger" (click)="modalRef.hide()"><i class="glyphicon glyphicon-remove"></i> Cancel</a>
           </div>
         </div>
-        {{ formObj | json}}
+        <!-- {{ formObj | json}} -->
       </form>
   </div>
 </ng-template>

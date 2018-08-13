@@ -25,15 +25,39 @@
             <input type="name" class="form-control" placeholder="Cellphone" appAutofocus formControlName="cellphone">
         </div>
         <div class="form-group">
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" appAutofocus formControlName="email">
+            <input type="email" class="form-control" placeholder="Enter email" appAutofocus formControlName="email">
+        </div>
+        <div class="form-group">
+            <input type="email" class="form-control" placeholder="Enter ID number" appAutofocus formControlName="idNumber">
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" placeholder="Password" appAutofocus formControlName="password">
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" placeholder="Confirm password" appAutofocus formControlName="confirmPassword">
+        </div>
+        <legend>Benefits</legend>
+        <div class="form-group clearfix">
+          <span class="pull-left">Society benefit</span>
+          <label class="switch pull-left">
+            <input type="checkbox" [checked]="rForm.controls['society_benefit'].value" formControlName="society_benefit">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="form-group clearfix">
+          <span class="pull-left">Grocery benefit</span>
+          <label class="switch pull-left">
+            <input type="checkbox" [checked]="rForm.controls['grocery_benefit'].value" formControlName="grocery_benefit">
+            <span class="slider round"></span>
+          </label>
         </div>
         <div class="btn-group pull-right">
-          <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+          <button [disabled]="!isValidForm()"  type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
           <a href="javascript:void(0)" class="btn btn-danger" routerLink="/admin/users"><i class="glyphicon glyphicon-remove"></i> Cancel</a>
         </div>
       </form>
     </div>
 </div>
 <div class="col-md-6">
-  {{ formObj | json}}
+  <!-- {{ formObj | json}} -->
 </div>

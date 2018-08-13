@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { Observable, timer } from 'rxjs';
+import { Observable, timer, of } from 'rxjs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpHeaders, HttpClient, HttpParams} from '@angular/common/http';
@@ -22,7 +22,7 @@ const httpOptions = {
   providers: [UsersService, BsModalService]
 })
 export class UsersComponent implements OnInit {
-  private url = 'http://kspas.co.za/wp-json/custom-plugin/v1/get_users';
+  private url = 'http://kspas.co.za/wp-json/custom-plugin/v1/getUsers';
   public adminData: any;
   public users: any;
   public user: any;
@@ -34,6 +34,8 @@ export class UsersComponent implements OnInit {
   disableSubmitBtn: boolean;
   dependentAdded: boolean;
   public queryString: any;
+  listSubscription: any;
+  userSubscription: any;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient, private usersService: UsersService, private modalService: BsModalService) {
@@ -56,31 +58,38 @@ export class UsersComponent implements OnInit {
           this.formObj = this.rForm.getRawValue();
         }
       );
-      this.usersService.getUsers();
+     // this.usersService.getUsers();
     }
 
   ngOnInit() {
     this.adminData = JSON.parse(localStorage.getItem('adminData'));
-    this.getUsers();
     console.log('this.adminData: ', this.adminData);
+    this.getUsers();
   }
-  initializeUserData(user) {
+  initializeUserData(user, currUser) {
     const userData = {
-      fullName: user.display_name,
-      email: user.user_email,
-      regDate: user.user_registered,
-      userID: user.ID,
-      username: user.user_login
+      firstName: (user.custom_field_first_name) ? user.custom_field_first_name[0] : null,
+      lastName: (user.custom_field_last_name) ? user.custom_field_last_name[0] : null,
+      address: (user.custom_field_address) ? user.custom_field_address[0] : null,
+      cellphone: (user.custom_field_cellphone) ? user.custom_field_cellphone[0] : null,
+      groceryBenefit: (user.custom_field_grocery_benefit) ? user.custom_field_grocery_benefit[0] : null,
+      occupation: (user.custom_field_occupation) ? user.custom_field_occupation[0] : null,
+      societyBenefit: (user.custom_field_society_benefit) ? user.custom_field_society_benefit[0] : null,
+      telephone: (user.custom_field_telephone) ? user.custom_field_telephone[0] : null,
+      username: (currUser.user_login) ? currUser.user_login : null,
+      regDate: (currUser.user_registered) ? currUser.user_registered : null,
+      email: (currUser.user_email) ? currUser.user_email : null
     };
     this.userData = userData;
   }
   getUsers() {
-
-    this.usersService.listUsersStream$.subscribe(
+    this.userSubscription =   this.usersService.getUsers().subscribe(
       res => {
-        this.users = JSON.parse(JSON.stringify(res)).map( user => {
-          return user.data;
-        });
+        this.users = res.map(
+          user => {
+            return user.user.data;
+          }
+        );
         console.log('UsersRes: ',  this.users);
       },
       err => {
@@ -89,9 +98,7 @@ export class UsersComponent implements OnInit {
     );
   }
   openModal(template: TemplateRef<any>, user, action?: string) {
-    this.getUser(user, action);
-    this. initializeUserData(user);
-    this.modalRef = this.modalService.show(template);
+    this.getUser(user, template, action);
   }
   prepopulateUsersData(user) {
     console.log('prepopulateUsersData: ', user);
@@ -136,20 +143,26 @@ export class UsersComponent implements OnInit {
     this.rForm.get('grocery_benefit').setValue(this.user.custom_field_grocery_benefit[0]) :
     this.rForm.get('grocery_benefit').setValue('');
   }
-  getUser(user, action?: any) {
+  getUser(user, template, action?: any) {
     console.log('user: ', user);
     console.log('user_id: ', user.ID);
     const userObj = { 'user_id': user.ID };
     this.usersService.getUser(userObj).subscribe(
       res => {
         this.user = res;
-        console.log('UserRes: ', res);
+        console.log('UserRes2: ', res);
       },
       err => {
-        console.log('UserErr: ', err);
+        console.log('UserErr2: ', err);
       },
       () => {
-        if (action) { if ( action === 'edit') { this.prepopulateUsersData(user); } }
+        if (action) {
+          if ( action === 'edit') {
+            this.prepopulateUsersData(user);
+          }
+        }
+        this.initializeUserData(this.user, user);
+        this.modalRef = this.modalService.show(template);
       }
     );
   }
@@ -157,23 +170,24 @@ export class UsersComponent implements OnInit {
     console.log('form:', form);
     this.usersService.updateUser(form).subscribe(
       res => {
-        console.log('updateUserRes: ',  this.users);
+        console.log('updateUserRes: ',  res);
         this.rForm.enable();
         this.rForm.reset();
         this.disableSubmitBtn = false;
         this.userUpdated = true;
         this.modalRef.hide();
-
+        window.scroll(0, 0);
         timer(3000).subscribe(() => {
           this.userUpdated = false;
         });
-
+        this.userSubscription.unsubscribe();
+        this.getUsers();
       },
       err => {
         console.log('updateUserErr: ', err);
       }
     );
-    this.getUsers();
+
   }
   isValidForm() {
     return this.rForm.valid;

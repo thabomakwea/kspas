@@ -1,3 +1,13 @@
+<div *ngIf="societyBenefit === 'false' && groceryBenefit === 'false'">
+  <div class="alert alert-warning">
+    <strong>Action required:</strong> Please download and submit the following application form(s) to activate your benefit.
+    <p>&nbsp;</p>
+    <ul>
+      <li><a target="_blank" href="http://kspas.co.za/wp-content/uploads/2018/08/groceriesBenefit.pdf" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Download pdf | Grocery Application Form</a> </li>
+    </ul>
+  </div>
+</div>
+
 <div class="col-md-4">
 
 <div class="card hovercard" *ngIf="societyBenefit === 'true'">
@@ -73,33 +83,9 @@
           <button class="btn btn-default groceryList" accordion-heading>
               <i class="glyphicon glyphicon-menu-down"></i>
           </button>
-          <h5>Funeral list</h5>
           <ul  class="list-group">
-            <li class="list-group-item">10kg Rice ×4</li>
-            <li class="list-group-item">10kg Mabele ×4</li>
-            <li class="list-group-item">10kg Maize meal ×6</li>
-            <li class="list-group-item">1kg Salt fine ×5</li>
-            <li class="list-group-item">6L Fresh milk ×2</li>
-            <li class="list-group-item">5L cooking oil ×4</li>
-            <li class="list-group-item">160's Rooibos tea bags</li>
-            <li class="list-group-item">Maize stamp 10kg ×2</li>
-            <li class="list-group-item">200 tea bags</li>
-            <li class="list-group-item">20L Concentrated juice</li>
-            <li class="list-group-item">3kg mayonnaise	</li>
-            <li class="list-group-item">Churtney sause 6.25 kg</li>
-          </ul>
-          <h5>Vegetable list</h5>
-          <ul  class="list-group">
-            <li class="list-group-item">4 bags potatoes</li>
-            <li class="list-group-item">4 bags of cabbages</li>
-            <li class="list-group-item">3 bags onions</li>
-            <li class="list-group-item">4 bags carrot</li>
-            <li class="list-group-item">4x butternuts</li>
-            <li class="list-group-item">4x beetroot</li>
-            <li class="list-group-item">12x bunches spinach</li>
-            <li class="list-group-item">2x bags green pepper</li>
-            <li class="list-group-item">2x green beans</li>
-            <li class="list-group-item">3 boxes tomatoes</li>
+            <li class="list-group-item"><strong>LIBERTY LIFE:</strong> R20 000. 00 Funeral benefit</li>
+            <li class="list-group-item"><strong>Ambulance Assist:</strong> Access to a Private ambulance service for free</li>
           </ul>
         </accordion-group>
       </accordion>

@@ -1,23 +1,27 @@
-  <div class="row">
+  <div class="row" *ngIf="totalDependents === 0 || totalProducts === 0">
       <div class="alert alert-warning" *ngIf="pendingUser">
-          <a href="#" class="pull-right">&times;</a>
-          <strong>Action required:</strong> Please download and submit the application form to activate your account.
+          <strong>Action required:</strong> Please download and submit the following application form(s) to activate your benefits.
+          <p>&nbsp;</p>
+          <ul>
+            <li *ngIf="totalDependents === 0"><a target="_blank" href="http://kspas.co.za/wp-content/uploads/2018/07/Kspas-CashBenefit.pdf" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Download pdf | Funeral Application Form</a> </li>
+            <li *ngIf="totalProducts === 0"><a target="_blank" href="http://kspas.co.za/wp-content/uploads/2018/08/groceriesBenefit.pdf"><i class="fa fa-file-pdf-o"></i></a> Download pdf | Grocery Application Form</li>
+          </ul>
         </div>
   </div>
-
   <div class="col-md-3 col-md-offset-2">
-      <div class="card">
+      <div class="card" [ngClass]="totalDependents === 0 ? 'disabled' : ''">
         <div class="header">
           <i class="glyphicon glyphicon-heart"></i>
         </div>
         <div class="footer">
-          <strong>{{totalDependents}}</strong>
+          <strong>{{totalDependents}}</strong> Users
         </div>
       </div>
-      <a href="javascript:void(0)" routerLink="/user/dependents" class="btn btn-primary btn-block">Viea all dependents</a>
+      <a href="javascript:void(0)" routerLink="/user/dependents" class="btn btn-primary btn-block" *ngIf="totalDependents > 0">View my dependents</a>
+      <a target="_blank" href="http://kspas.co.za/wp-content/uploads/2018/08/groceriesBenefit.pdf" class="btn btn-danger btn-block" *ngIf="totalDependents === 0"><i class="fa fa-file-pdf-o"></i> Download Application Form</a>
   </div>
   <div class="col-md-3">
-      <div class="card">
+      <div class="card" [ngClass]="totalProducts === 0 ? 'disabled' : ''">
         <div class="header">
           <i class="glyphicon glyphicon-gift"></i>
         </div>
@@ -25,7 +29,8 @@
           <strong>{{totalProducts}}</strong> Products
         </div>
       </div>
-      <a href="javascript:void(0)" routerLink="/user/products" class="btn btn-primary btn-block">Viea all products</a>
+      <a href="javascript:void(0)" routerLink="/user/products" class="btn btn-primary btn-block" *ngIf="totalProducts > 0">View my products</a>
+      <a target="_blank" href="http://kspas.co.za/wp-content/uploads/2018/07/Kspas-CashBenefit.pdf" class="btn btn-danger btn-block" *ngIf="totalProducts === 0"><i class="fa fa-file-pdf-o"></i> Download Application Form</a>
   </div>
 
 

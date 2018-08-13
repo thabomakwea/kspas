@@ -6,14 +6,29 @@
     <li class="list-group-item text-right">
       <span class="pull-left"><strong>Username: </strong></span> {{userData.data.user_login}}
     </li>
-    <li class="list-group-item text-right">
-      <span class="pull-left"><strong>Name: </strong></span> {{userData.data.display_name}}
+    <li class="list-group-item text-right" *ngIf="profile.firstName">
+      <span class="pull-left"><strong>Name: </strong></span> {{profile.firstName}}
     </li>
-    <li class="list-group-item text-right">
-      <span class="pull-left"><strong>Email: </strong></span> {{userData.data.user_email}}
+    <li class="list-group-item text-right" *ngIf="profile.lastName">
+      <span class="pull-left"><strong>Last name: </strong></span> {{profile.lastName}}
     </li>
-    <li class="list-group-item text-right"  *ngFor="let data of user">
-      <span class="pull-left"><strong>{{data.LABEL}}</strong></span> {{data.VALUE}}
+    <li class="list-group-item text-right" *ngIf="profile.cellphone">
+      <span class="pull-left"><strong>Cellphone:</strong></span> {{profile.cellphone}}
+    </li>
+    <li class="list-group-item text-right" *ngIf="profile.idNumber">
+      <span class="pull-left"><strong>ID number:</strong></span> {{profile.idNumber}}
+    </li>
+    <li class="list-group-item text-right" *ngIf="profile.occupation">
+      <span class="pull-left"><strong>Occupation:</strong></span> {{profile.occupation}}
+    </li>
+    <li class="list-group-item text-right" *ngIf="profile.telephone">
+      <span class="pull-left"><strong>Telephone:</strong></span> {{profile.telephone}}
+    </li>
+    <li class="list-group-item text-right" *ngIf="profile.societyBenefit">
+      <span class="pull-left"><strong>Society benefit:</strong></span> {{ profile.societyBenefit === 'true' ? 'Yes' : 'No'  }}
+    </li>
+    <li class="list-group-item text-right" *ngIf="profile.groceryBenefit">
+      <span class="pull-left"><strong>Grocery benefit:</strong></span> {{profile.groceryBenefit === 'true' ? 'Yes' : 'No' }}
     </li>
   </ul>
 </div>
