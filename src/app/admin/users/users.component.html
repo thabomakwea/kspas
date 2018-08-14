@@ -1,6 +1,6 @@
 <div class="alert alert-success" *ngIf="userUpdated">
     <a href="#" class="pull-right">&times;</a>
-    <strong>Success:</strong> User was added successfully.
+    <strong>Success:</strong> User was updated successfully.
   </div>
 <div class="panel panel-default panel-table">
 <div class="panel-heading">
@@ -8,7 +8,7 @@
     <div class="col-md-6 text-left"  id="custom-search-form" >
         <!--<form id="custom-search-form" class="form-search form-horizontal pull-left">-->
             <div class="input-append span12">
-                <input type="text" class="search-query mac-style" placeholder="Search" (input)="onSearchChange($event.target.value)">
+                <input type="text" [disabled]="searchBoxDisabled" class="search-query mac-style" placeholder="Search" (input)="onSearchChange($event.target.value)">
                 <button type="submit" class="btn"><i class="glyphicon glyphicon-search"></i></button>
             </div>
         <!--</form>-->
@@ -177,4 +177,7 @@
       </form>
   </div>
 </ng-template>
+
+<!-- Spinner -->
+<div class="loading" *ngIf="usersLoading">Loading&#8230;</div>
 

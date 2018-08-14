@@ -42,6 +42,8 @@ export class UsersComponent implements OnInit {
     totalRecords: 0
   };
   usersList: any;
+  usersLoading = false;
+  searchBoxDisabled = false;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient, private usersService: UsersService, private modalService: BsModalService) {
@@ -89,6 +91,7 @@ export class UsersComponent implements OnInit {
     this.userData = userData;
   }
   getUsers() {
+    this.usersLoading= true;
     this.userSubscription =   this.usersService.getUsers().subscribe(
       res => {
         console.log('Res: ', res);
@@ -98,6 +101,7 @@ export class UsersComponent implements OnInit {
             return user.userMeta;
           }
         );
+        this.usersLoading= false;
         console.log('UsersRes: ', this.users);
       },
       err => {
@@ -206,7 +210,8 @@ export class UsersComponent implements OnInit {
       key: searchValue,
       pageNumber: pageNumber
     };
-
+    this.usersLoading= true;
+    this.searchBoxDisabled = true;
     this.userSubscription =   this.usersService.getUsers(searchObj).subscribe(
       res => {
         console.log('Res: ', res);
@@ -216,10 +221,13 @@ export class UsersComponent implements OnInit {
             return user.userMeta;
           }
         );
+        this.usersLoading= false;
+        this.searchBoxDisabled = false;
         console.log('UsersRes: ', this.users);
       },
       err => {
         console.log('UsersErr: ', err);
+        this.usersLoading= false;
       }
     );
   }
