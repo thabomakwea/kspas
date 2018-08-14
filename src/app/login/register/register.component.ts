@@ -45,6 +45,7 @@ export class RegisterComponent implements OnInit {
     this.spinnerLoading = true;
     this.rForm.disable();
     console.log('form: ', form);
+    this.spinnerLoading = true;
     this.authenticationservice.registerUser(form).subscribe(
       res => {
         console.log('resLogin: ' , res);
