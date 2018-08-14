@@ -21,8 +21,8 @@ export class RegisterComponent implements OnInit {
   constructor(private fb: FormBuilder, private authenticationservice: LoginService) {
     this.rForm = fb.group({
       'username' : [null, Validators.required],
-      'email' : [null, Validators.required],
-      'cellphone' : [null, Validators.required],
+      'email' : [null, Validators.required, Validators.pattern('([a-zA-Z0-9_.-]+)@([a-zA-Z0-9_.-]+)\\.([a-zA-Z]{2,5})')],
+      'cellphone' : [null, Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)],
       'telephone' : [null, Validators.required],
       'idNumber' : [null, Validators.required],
       'address' : [null, Validators.required],
@@ -80,5 +80,14 @@ export class RegisterComponent implements OnInit {
   }
   closeServerSuccess() {
     this.serverSuccess = false;
+  }
+
+  keyPress(event: any) {
+    const pattern = /[0-9\+\-\ ]/;
+
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
   }
 }
