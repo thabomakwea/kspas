@@ -1,3 +1,9 @@
+.table-responsive.dependents {
+  width: 145% !important;
+}
+.modal-body.dependents {
+  overflow-x: scroll;
+}
 .switch {
   position: relative;
   display: inline-block;

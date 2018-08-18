@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
     loggedOut: [
        { label: 'Login', link: '/login', actions: []},
        { label: 'Register', link: '/register', actions: []},
-       { label: 'Back to main site', link: 'http://kspas.co.za/', actions: []}
+      //  { label: 'Back to main site', link: 'http://kspas.co.za/', actions: []}
     ],
     loggedIn: {
       user: [

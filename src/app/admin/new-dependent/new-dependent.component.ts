@@ -32,6 +32,8 @@ export class NewDependentComponent implements OnInit {
       'dateOfBirth' : [null, Validators.required],
       'mainMemberID' : [null, Validators.required],
       'dependentType' : [null, Validators.required],
+      'grocery_benefit' : [null, Validators.required],
+      'society_benefit' : [null, Validators.required],
     });
     this.rForm.valueChanges.subscribe(
       (res) => {

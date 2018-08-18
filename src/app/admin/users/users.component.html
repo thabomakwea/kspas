@@ -34,6 +34,7 @@
     <tbody>
         <tr *ngFor="let user of users; let i = index">
           <td align="center">
+              <a class="btn btn-info actions" (click)="openModal(templateViewDependents, i, 'dependents')"><i class="glyphicon glyphicon-heart"></i></a>
             <a class="btn btn-primary actions" (click)="openModal(template, i)"><i class="glyphicon glyphicon-eye-open"></i></a>
             <a class="btn btn-default actions" (click)="openModal(templateEdit, i, 'edit')"><i class="glyphicon glyphicon-pencil"></i></a>
             <!-- <a class="btn btn-danger actions"><i class="glyphicon glyphicon-trash"></i></a> -->
@@ -177,4 +178,46 @@
       </form>
   </div>
 </ng-template>
+
+<!--  MODAL DIALOG VIEW DEPEBDENTS -->
+<ng-template #templateViewDependents>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Dependents</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body dependents">
+      <div class="row table-responsive dependents">
+        <div class="alert alert-default" *ngIf="dependents && dependents.length === 0">
+            <strong>Sorry:</strong> User has no dependents
+          </div>
+          <table class="table table-striped table-bordered table-list" *ngIf="dependents  && dependents.length !== 0">
+              <thead>
+                <tr>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>ID</th>
+                    <th>Date of birth</th>
+                    <th>Dependent type</th>
+                    <th>Grocery Benefit</th>
+                    <th>Society Benefit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let dependent of dependents; let i = index">
+                  <td>{{dependent.ct_name_text_e394[0]}}</td>
+                  <td>{{dependent.ct_Last_name_text_3960[0]}}</td>
+                  <td>{{dependent.ct_ID_text_e7e5[0]}}</td>
+                  <td>{{dependent.ct_Date_of_bi_text_e345[0]}}</td>
+                  <td>{{ dependent.ct_Dependent__text_c916[0] === '1' ? 'Spouse' : 'Child'}}</td>
+                  <td>{{ dependent._ct_text_5b786aab87ef8 ? dependent._ct_text_5b786aab87ef8[0] : '' }}</td>
+                  <td>{{ dependent._ct_text_5b786ad21b75d ? dependent._ct_text_5b786ad21b75d[0] : '' }}</td>
+                </tr>
+              </tbody>
+            </table>
+      </div>
+    </div>
+  </ng-template>
+
 

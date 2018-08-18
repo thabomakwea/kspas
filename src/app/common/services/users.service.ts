@@ -21,6 +21,7 @@ export class UsersService {
   private urlUsers = 'http://kspas.co.za/wp-json/custom-plugin/v1/getUsers?';
   private urlUser = 'http://kspas.co.za/wp-json/custom-plugin/v1/getUserMeta?';
   private urlUpdateUser = 'http://kspas.co.za/wp-json/custom-plugin/v1/updateUser?';
+  private urlUsersDependents = 'http://kspas.co.za/wp-json/custom-plugin/v1/getUsersDependents?';
   // Observable Streams
  public  listUsersStream$ = this.listUsersSource.asObservable();
   constructor(private http: HttpClient) { }
@@ -40,6 +41,15 @@ export class UsersService {
   getUser(user_id): Observable<any> {
     const body = this.serializeObj(user_id);
     return this.http.post(this.urlUser + body, httpOptions)
+      .map( res => {
+        return res;
+      }, err => {
+        return err;
+      } );
+  }
+  getUsersDependents(userObj): Observable<any> {
+    const body = this.serializeObj(userObj);
+    return this.http.post(this.urlUsersDependents + body, httpOptions)
       .map( res => {
         return res;
       }, err => {

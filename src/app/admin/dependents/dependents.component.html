@@ -37,17 +37,17 @@
         </tr>
       </thead>
       <tbody>
-              <tr *ngFor="let dependent of dependents; let i = index">
-                <td align="center">
-                  <a class="btn btn-primary actions" (click)="openModal(template, dependent)"><i class="glyphicon glyphicon-eye-open"></i></a>
-                  <a class="btn btn-default actions" (click)="openModal(templateEdit, dependent, 'edit')"><i class="glyphicon glyphicon-pencil"></i></a>
-                  <a class="btn btn-danger actions" (click)="openModal(templateDelete, dependent, 'delete')"><i class="glyphicon glyphicon-trash"></i></a>
-                </td>
-                <td>{{dependent.ct_name_text_e394[0]}}</td>
-                <td>{{dependent.ct_Last_name_text_3960[0]}}</td>
-                <td>{{dependent.ct_ID_text_e7e5[0]}}</td>
-              </tr>
-            </tbody>
+        <tr *ngFor="let dependent of dependents; let i = index">
+          <td align="center">
+            <a class="btn btn-primary actions" (click)="openModal(template, dependent)"><i class="glyphicon glyphicon-eye-open"></i></a>
+            <a class="btn btn-default actions" (click)="openModal(templateEdit, dependent, 'edit')"><i class="glyphicon glyphicon-pencil"></i></a>
+            <a class="btn btn-danger actions" (click)="openModal(templateDelete, dependent, 'delete')"><i class="glyphicon glyphicon-trash"></i></a>
+          </td>
+          <td>{{dependent.ct_name_text_e394[0]}}</td>
+          <td>{{dependent.ct_Last_name_text_3960[0]}}</td>
+          <td>{{dependent.ct_ID_text_e7e5[0]}}</td>
+        </tr>
+      </tbody>
     </table>
 
   </div>
@@ -162,3 +162,4 @@
     </div>
   </div>
 </ng-template>
+

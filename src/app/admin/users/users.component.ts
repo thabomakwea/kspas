@@ -42,6 +42,7 @@ export class UsersComponent implements OnInit {
     totalRecords: 0
   };
   usersList: any;
+  dependents: any[] = undefined;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient, private usersService: UsersService, private modalService: BsModalService) {
@@ -151,10 +152,35 @@ export class UsersComponent implements OnInit {
     this.rForm.get('grocery_benefit').setValue(this.user.custom_field_grocery_benefit[0]) :
     this.rForm.get('grocery_benefit').setValue('');
   }
+  prepopulateDependentsData(user, userData) {
+    console.log('user: ', user);
+    console.log('userData: ', userData);
+    console.log('this.user: ', this.user);
+    const userObj = {
+      'user_id': user,
+      'grocery_benefit': this.user.custom_field_grocery_benefit[0],
+      'society_benefit': this.user.custom_field_society_benefit[0],
+    };
+    this.usersService.getUsersDependents(userObj).subscribe(
+      res => {
+        console.log('User Dependents: ', res);
+        this.dependents = res.map(
+          dependent => {
+            return dependent.dependentMeta;
+          }
+        );
+        console.log('this.dependents : ', this.dependents );
+      },
+      err => {
+        console.log('User Dependents Err: ', err);
+      },
+    );
+  }
   getUser(user, template, action?: any) {
     console.log('user: ', user);
     console.log('user_id: ', this.usersList[user].user.data.ID);
-    const userObj = { 'user_id': this.usersList[user].user.data.ID };
+    const user_id = this.usersList[user].user.data.ID;
+    const userObj = { 'user_id': user_id };
     this.usersService.getUser(userObj).subscribe(
       res => {
         this.user = res;
@@ -167,6 +193,8 @@ export class UsersComponent implements OnInit {
         if (action) {
           if ( action === 'edit') {
             this.prepopulateUsersData(user, this.usersList[user].user.data);
+          } else if ( action === 'dependents') {
+            this.prepopulateDependentsData(user_id, this.usersList[user].user.data);
           }
         }
         this.initializeUserData(this.user, user);

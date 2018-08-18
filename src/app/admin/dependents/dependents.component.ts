@@ -78,7 +78,7 @@ export class DependentsComponent implements OnInit {
     }
     openModal(template: TemplateRef<any>, dependent, action?: string) {
       console.log('dependent: ', dependent);
-      this. initializeDependentData(dependent.custom_fields);
+      this. initializeDependentData(dependent);
       if (action) { if ( action === 'edit') { this.prepopulateUsersData(this.dependentData); } }
       if (action) { if ( action === 'delete') { this.dependentID = dependent.id; } }
       this.modalRef = this.modalService.show(template);

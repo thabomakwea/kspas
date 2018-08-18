@@ -25,6 +25,11 @@
                 Logout
               </a>
           </li>
+          <li *ngIf="!logoutLink">
+              <a href="http://kspas.co.za/" id="basic-link">
+                Back to main site
+              </a>
+          </li>
         </ul>
         <div class="menu-responsive" (click)="responsiveMenu()">
           <i class="fa fa-bars"></i>

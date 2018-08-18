@@ -224,7 +224,8 @@ header .menu li a i {
 }
 .btn.btn-danger.actions,
 .btn.btn-default.actions,
-.btn.btn-primary.actions {
+.btn.btn-primary.actions,
+.btn.btn-info.actions {
   margin-right: 7px;
   font-size: 13px;
   display: inline;
