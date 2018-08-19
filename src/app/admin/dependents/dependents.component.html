@@ -13,7 +13,7 @@
       <div class="col-md-6 text-left"  id="custom-search-form" >
         <!--<form id="custom-search-form" class="form-search form-horizontal pull-left">-->
             <div class="input-append span12">
-                <input type="text" class="search-query mac-style" placeholder="Search" (input)="onSearchChange($event.target.value)" >
+                <input type="text" class="search-query mac-style" [disabled]="searchBoxDisabled" placeholder="Search" (input)="onSearchChange($event.target.value)" >
                 <button type="submit" class="btn"><i class="glyphicon glyphicon-search"></i></button>
             </div>
         <!--</form>-->
@@ -162,4 +162,9 @@
     </div>
   </div>
 </ng-template>
+<<<<<<< HEAD
 
+=======
+<!-- Spinner -->
+<div class="loading" *ngIf="spinnerLoading">Loading&#8230;</div>
+>>>>>>> ae40beff9d1ae580e221864d60af521c158c7577

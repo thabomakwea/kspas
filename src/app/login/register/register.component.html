@@ -12,42 +12,64 @@
           <strong>Success:</strong> Please check your email, we have sent you a link to create a new password.
         </div>
       <form role="form" [formGroup] ="rForm"  (ngSubmit)="register(rForm.value)">
-        <div class="form-group">
-          <label for="cellphone">Cellphone</label>
-          <input type="text" class="form-control" formControlName="cellphone" placeholder="Enter cellphone number">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" appAutofocus formControlName="username" placeholder="username">
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="email">E-mail</label>
+                <input type="email" class="form-control" formControlName="email" placeholder="email address">
+            </div>
         </div>
-        <div class="form-group">
-          <label for="telephone">Telephone</label>
-          <input type="text" class="form-control" formControlName="telephone" placeholder="Enter telephone number">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="firstname">Firstname</label>
+                <input type="text" class="form-control" formControlName="firstName" placeholder="first name">
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="lastname">Lastname</label>
+                <input type="text" class="form-control" formControlName="lastName" placeholder="last name">
+            </div>
         </div>
-        <div class="form-group">
-          <label for="address">ID number</label>
-          <input type="text" class="form-control" formControlName="idNumber" placeholder="Enter ID number">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="idNumber">ID number</label>
+                <input type="text" class="form-control" formControlName="idNumber" maxlength="13" (keypress)="keyPress($event)" placeholder="ID number">
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="occupation">Occupation</label>
+                <input type="text" class="form-control" formControlName="occupation" placeholder="occupation">
+            </div>
         </div>
-        <div class="form-group">
-          <label for="telephone">Home address</label>
-          <input type="text" class="form-control" formControlName="address" placeholder="Enter address">
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="cellphone">Cellphone number</label>
+                <input type="text" class="form-control" formControlName="cellphone" minlength="10" maxlength="10" (keypress)="keyPress($event)" placeholder="cellphone number">
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="telephone">Contact number</label>
+               <input type="text" class="form-control" formControlName="telephone" minlength="10" maxlength="10" (keypress)="keyPress($event)" placeholder="telephone number">
+            </div>
         </div>
-        <div class="form-group">
-          <label for="telephone">Occupation</label>
-          <input type="text" class="form-control" formControlName="occupation" placeholder="Enter occupation">
+
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="address">Home address</label>
+                <input type="text" class="form-control" formControlName="address" placeholder="address">
+            </div>
+
+            <!-- <div class="form-group col-md-6">
+                <label for="telephone">Telephone</label>
+               <input type="text" class="form-control" formControlName="telephone" placeholder="telephone number">
+            </div> -->
         </div>
-        <div class="form-group">
-          <label for="telephone">firstName</label>
-          <input type="text" class="form-control" formControlName="firstName" placeholder="Enter first name">
-        </div>
-        <div class="form-group">
-            <label for="telephone">lastName</label>
-            <input type="text" class="form-control" formControlName="lastName" placeholder="Enter last name">
-          </div>
-        <div class="form-group">
-          <label for="inputUsernameEmail">Username</label>
-          <input type="text" class="form-control" appAutofocus formControlName="username" placeholder="Enter username">
-        </div>
-        <div class="form-group">
-          <label for="inputPassword">E-mail</label>
-          <input type="email" class="form-control" formControlName="email" placeholder="Enter email address">
-        </div>
+            
         <button type="submit" class="btn btn-lg btn-danger btn-block" [disabled]="!rForm.valid">
           Sign up
         </button>

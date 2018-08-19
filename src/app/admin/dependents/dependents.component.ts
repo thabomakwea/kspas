@@ -22,6 +22,8 @@ export class DependentsComponent implements OnInit {
   public userUpdated = false;
   public userDeleted = false;
   public dependentID;
+  public searchBoxDisabled = false;
+  public spinnerLoading: boolean = false;
   modalRef: BsModalRef;
   rForm: FormGroup;
   formObj: any;
@@ -57,6 +59,8 @@ export class DependentsComponent implements OnInit {
     return this.rForm.valid;
   }
   getDependents() {
+    this.spinnerLoading= true;
+    this.searchBoxDisabled = true;
     this.dependentsService.getDependents().subscribe(
       res => {
         console.log('Res Load dependents: ', res);
@@ -65,6 +69,8 @@ export class DependentsComponent implements OnInit {
             return dependent.custom_fields;
           }
         );
+        this.spinnerLoading= false;
+        this.searchBoxDisabled = false;
         console.log('Load Dependents: ', this.dependents);
         // this.configTable.totalPages = res.pages;
         for (let i = 0 ; i < res.pages; i++) {
@@ -72,6 +78,7 @@ export class DependentsComponent implements OnInit {
         }
       },
       err => {
+        this.searchBoxDisabled = false;
         console.log('Err: ', err);
       }
       );
@@ -108,7 +115,8 @@ export class DependentsComponent implements OnInit {
         key: searchValue,
         pageNumber: pageNumber
       };
-
+      this.spinnerLoading = true;
+      this.searchBoxDisabled = true;
       this.dependentsService.searchDependents(searchObj).subscribe(
       res => {
         // this.dependents = res.posts;
@@ -118,7 +126,8 @@ export class DependentsComponent implements OnInit {
             return dependent.dependentMeta;
           }
         );
-
+        this.spinnerLoading = false;
+        this.searchBoxDisabled = false;
         console.log('search dependents: ', dependents);
         this.dependents = dependents;
 
@@ -134,6 +143,7 @@ export class DependentsComponent implements OnInit {
         }
       },
       err => {
+        this.spinnerLoading = false;
         console.log('Err: ', err);
       }
       );

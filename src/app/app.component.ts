@@ -63,7 +63,7 @@ export class AppComponent implements OnInit {
     this.navOptions = this.menu.loggedOut;
     this.subscription = this.loginService.loginStream$.subscribe(
       res => {
-        console.log('RES: ', res.data.display_name);
+        console.log('RES: ', res.data);
         this.userDisplayName = res.data.display_name;
         if (res.roles[0] === 'administrator') {
           this.navOptions = this.menu.loggedIn.admin;
